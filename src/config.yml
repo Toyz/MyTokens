@@ -1,0 +1,79 @@
+title: '&2Toyz Token Shop'
+
+#Modes to drop Tokens
+modes:
+  #Player Vs Monster (WIP)
+  pve: false
+  #Player vs Player
+  pvp: false
+  #When a user mines a block
+  blockbreak: true
+
+#Drop Item Config
+dropitem: 
+  drop: false
+  #Alert to tell the user they got a token
+  alert: "You just got a Token!"
+  #Used Token Item Message
+  used: "You got %amount tokens!"
+  #Item to Drop
+  item:
+    #399 is "Nether Star"
+    id: "399"
+    name: Token
+    #Delay to till user can pick up (In seconds)
+    delay: 1
+    lore: 
+      - "You got Tokens!"
+      - "Amount: %amount"
+      - Right Click to claim your token
+
+#Message to send to user
+dropmsg:
+  say: true
+  #Messages to send in order
+  messages:
+    - "Hey, %player you got %amount tokens!"
+    - "You now have %total tokens"
+    
+#Info item in Interface
+infoitem:
+  #368 is "Ender Perl"
+  id: "368"
+  #Only works on certain items (Doesn't work)
+  glow: true
+  name: My Tokens
+  lore:
+    - You have %total tokens
+    
+#Drop Probilty
+Drop:
+  kills:
+    #Min and max of tokens droped
+    min: 1
+    max: 10
+    #percent of how often to drop (0.0 - 1.0)
+    percent: 1
+  break:
+    blocks:
+      #Iron Ore
+      15:
+        #Min and max of tokens droped
+        min: 1
+        max: 5
+        #percent of how often to drop (0.0 - 1.0)
+        percent: 1
+      #Grass
+      2:
+        #Min and max of tokens droped
+        min: 1
+        max: 5
+        #percent of how often to drop (0.0 - 1.0)
+        percent: 1
+      #Dirt
+      1:
+        #Min and max of tokens droped
+        min: 1
+        max: 5
+        #percent of how often to drop (0.0 - 1.0)
+        percent: 1

@@ -1,0 +1,32 @@
+name: MyTokens
+main: com.toyz.MyTokens.MyTokens
+version: 1.0
+author: Toyz
+description: A Token Plugin to give players a token style item within the server
+commands:
+  mytokens:
+    description: Show all commands for mytokens
+  myt:
+    description: Show all user based commands for MyTokens
+    
+permissions:
+  #admin commands permissions
+  mytokens.admin.reload:
+    description: Reload the plugin
+    default: op
+  mytokens.admin.give:
+    description: Gives a player tokens
+    default: op
+  mytokens.admin.reset:
+    description: Resets a user to 0 tokens
+    default: op
+  #public commands permissions
+  mytokens.myt.open:
+    description: Allows player to open the shop
+    default: true
+  mytokens.myt.give:
+    description: Allows players to trade tokens
+    default: op
+  mytokens.myt.help:
+    description: Allows players to see the MYT Command help
+    default: op

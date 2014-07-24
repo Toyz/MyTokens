@@ -1,0 +1,28 @@
+#Order 1 - 53 (Max being 53)
+Shop:
+  1:
+    id: '17:1'
+    name: '&cSpruce Wood'
+    #Only works on certain items (Doesn't work)
+    glow: false
+    #Count of item to display (0 means 1)
+    amount: 15
+    lore:
+      - '&6Spruce wood 16 tokens'
+      - '&ePlease dont spam click'
+    cost: 16
+    commands:
+      - '/give %player 17:1 16'
+  2:
+    id: '276'
+    name: '&fGodly Sword'
+    #Only works on certain items (Doesn't work)
+    glow: true
+    #Count of item to display (0 means 1)
+    amount: 0
+    lore:
+      - '&61 Godly Sword'
+      - '&eCosts 5 tokens'
+    cost: 5
+    commands:
+      - '/give %player 276 1'

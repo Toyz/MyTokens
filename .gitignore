@@ -1,3 +1,8 @@
+.classpath
+.project
+.settings
+bin
+*.jardesc
 *.class
 
 # Mobile Tools for Java (J2ME)
@@ -23,8 +28,7 @@ hs_err_pid*
 .LSOverride
 
 # Icon must ends with two \r.
-Icon
-
+Icon
 # Thumbnails
 ._*
 
