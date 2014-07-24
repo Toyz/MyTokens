@@ -97,7 +97,7 @@ public class MyTokensAdmin extends BaseCommand{
 				if(_cmd.getArgs().length >= 2){
 					Player givee = Bukkit.getPlayer(_cmd.getArg(1));
 					
-					MyTokens._plugin.getConfig().set(givee.getUniqueId().toString(), 0);
+					MyTokens.UserTokens.getConfig().set(givee.getUniqueId().toString(), 0); 
 					givee.sendMessage(MessageHelper.Format(null, "Your Tokens have been reset to 0"));
 				}
 		}
