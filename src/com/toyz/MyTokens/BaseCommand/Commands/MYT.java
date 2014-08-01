@@ -31,8 +31,10 @@ public class MYT extends BaseCommand{
 		}
 		if(_cmd.getArg(0).equalsIgnoreCase("?") || _cmd.getArg(0).equalsIgnoreCase("help")){
 			if(!_cmd.getPlayer().hasPermission(_Permission + ".help")){
-				sendMessage(MessageHelper.Format(_cmd.getPlayer(), "&4You do not have permission to use this command"));
-				return;
+				if(!_cmd.getPlayer().isOp()){
+					sendMessage(MessageHelper.Format(_cmd.getPlayer(), "&4You do not have permission to use this command"));
+					return;
+				}
 			}
 			for(String msg : MyTokens.PublicHelpCommands){
 				sendMessage(MessageHelper.Format(null, msg));
@@ -45,8 +47,10 @@ public class MYT extends BaseCommand{
 		if(_cmd.getArg(0).equalsIgnoreCase("give")){
 			if(_cmd.getArgs().length >= 3){
 				if(!_cmd.getPlayer().hasPermission(_Permission + ".give")){
-					sendMessage(MessageHelper.Format(_cmd.getPlayer(), "&4You do not have permission to use this command"));
-					return;
+					if(!_cmd.getPlayer().isOp()){
+						sendMessage(MessageHelper.Format(_cmd.getPlayer(), "&4You do not have permission to use this command"));
+						return;
+					}
 				}
 				Player Getter = Bukkit.getPlayer(_cmd.getArg(1));
 				if(Getter == null){

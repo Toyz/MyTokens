@@ -40,9 +40,11 @@ public class MyTokensAdmin extends BaseCommand{
 		}
 		if(_cmd.getArg(0).equalsIgnoreCase("reload")){
 			if(_cmd.isPlayer()){
-				if(!_cmd.getPlayer().hasPermission(_Permission + ".reload") && !_cmd.getPlayer().isOp()){
-					sendMessage("You do not have permission to run this command");
-					return;
+				if(!_cmd.getPlayer().hasPermission(_Permission + ".reload")){
+					if(!_cmd.getPlayer().isOp()){
+						sendMessage("You do not have permission to run this command");
+						return;
+					}
 				}
 			}
 			sendMessage("Reloading MyTokens Config");
@@ -52,9 +54,11 @@ public class MyTokensAdmin extends BaseCommand{
 		
 		if(_cmd.getArg(0).equalsIgnoreCase("give")){
 			if(_cmd.isPlayer()){
-				if(!_cmd.getPlayer().hasPermission(_Permission + ".give") && !_cmd.getPlayer().isOp()){
-					sendMessage("You do not have permission to run this command");
-					return;
+				if(!_cmd.getPlayer().hasPermission(_Permission + ".give")){
+					if(!_cmd.getPlayer().isOp()){
+						sendMessage("You do not have permission to run this command");
+						return;
+					}
 				}
 			}
 				if(_cmd.getArgs().length >= 3){
@@ -89,9 +93,11 @@ public class MyTokensAdmin extends BaseCommand{
 		
 		if(_cmd.getArg(0).equalsIgnoreCase("reset")){
 			if(_cmd.isPlayer()){
-				if(!_cmd.getPlayer().hasPermission(_Permission + ".reset") && !_cmd.getPlayer().isOp()){
-					sendMessage("You do not have permission to run this command");
-					return;
+				if(!_cmd.getPlayer().hasPermission(_Permission + ".reset")){
+					if(!_cmd.getPlayer().isOp()){
+						sendMessage("You do not have permission to run this command");
+						return;
+					}
 				}
 			}
 				if(_cmd.getArgs().length >= 2){
