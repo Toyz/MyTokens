@@ -1,6 +1,6 @@
 name: MyTokens
 main: com.toyz.MyTokens.MyTokens
-version: 1.1
+version: 1.2
 author: Toyz
 description: A Token Plugin to give players a token style item within the server
 commands:

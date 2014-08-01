@@ -17,7 +17,7 @@ public class MyTokensAdmin extends BaseCommand{
 	public static Boolean Fire(IssueCommands info){
 		_cmd = info;
 		if(_cmd.isPlayer()){
-			if(_cmd.getPlayer().hasPermission(_Permission) || _cmd.getPlayer().isOp())
+			if(_cmd.getPlayer().hasPermission(_Permission))
 			{
 				Trigger();
 				return true;
