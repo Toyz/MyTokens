@@ -1,5 +1,6 @@
 package com.toyz.MyTokens;
 
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.Hashtable;
@@ -19,6 +20,7 @@ import com.toyz.MyTokens.BaseCommand.BaseCommand;
 import com.toyz.MyTokens.Events.*;
 import com.toyz.MyTokens.Tools.*;
 import com.toyz.MyTokens.Utils.ConfigAccessor;
+import com.toyz.MyTokens.Utils.MetricsLite;
 
 public class MyTokens extends JavaPlugin{
 	public static Logger logger = null;
@@ -38,20 +40,33 @@ public class MyTokens extends JavaPlugin{
 			"&b/myt give username amount &f- Gives said user a amount of tokens",
 			"&b/myt bal &f- Shows your current token balance");
 	
+	public static ConfigAccessor KilledCounter = null;
 	//Enable Plugin
 	public void onEnable() {
 		console = Bukkit.getServer().getConsoleSender();
 		logger = getLogger();
 		_plugin = this;
 		
+		 try {
+		        MetricsLite metrics = new MetricsLite(this);
+		        metrics.start();
+		    } catch (IOException e) {
+		        // Failed to submit the stats :-(
+		    }
+		 
 		//Load some Configs!
 		UserTokens = new ConfigAccessor(this, "Tokens.yml");
 		TokenShop = new ConfigAccessor(this, "Shop.yml");
+		KilledCounter = new ConfigAccessor(this, "kills.yml");
 		
 		//Save Defaults if needed
 		UserTokens.saveDefaultConfig();
 		TokenShop.saveDefaultConfig();
+		KilledCounter.saveDefaultConfig();
 		saveDefaultConfig();
+		
+		//Update configs if needed
+		this.CheckConfig();
 		
 		//Build our list of items!
 		Item I = new Item();
@@ -70,7 +85,7 @@ public class MyTokens extends JavaPlugin{
 		pm.registerEvents(new BlockBreak(), this);
 		pm.registerEvents(new PlayerJoin(), this);
 		pm.registerEvents(new PlayerUse(), this);
-		//pm.registerEvents(new EntityDeath(), this);
+		pm.registerEvents(new EntityDeath(), this);
 		
 		//Start the auto saving
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new Runnable(){
@@ -81,25 +96,45 @@ public class MyTokens extends JavaPlugin{
 		}, 800L, 800L);
 	}
 	
+	public void CheckConfig(){
+		if(this.getConfig().getString("prefix") == null){
+			this.getConfig().set("prefix", "&a[&bMyTokens&a]&f");
+			this.saveConfig();
+			this.reloadConfig();
+		}
+		
+		if(this.getConfig().getString("settings.pvp.killthrottle") == null && this.getConfig().getString("settings.pvp.enablethrottle") == null){
+			this.getConfig().set("settings.pvp.killthrottle", 3);
+			this.getConfig().set("settings.pvp.enablethrottle", true);
+			this.saveConfig();
+			this.reloadConfig();
+		}
+	}
+	
 	//Disable Plugin
 	public void onDisable() {
 		UserTokens.saveConfig();
 		TokenShop.saveConfig();
+		KilledCounter.saveConfig();
 		
 		UserTokens = null;
 		TokenShop = null;
+		KilledCounter = null;
 	}
 	
 	public void Reload(){
 		UserTokens.saveConfig();
 		TokenShop.saveConfig();
+		KilledCounter.saveConfig();
 		
 		UserTokens = null;
 		TokenShop = null;
+		KilledCounter = null;
 		
 		//Load some Configs!
 		UserTokens = new ConfigAccessor(this, "Tokens.yml");
 		TokenShop = new ConfigAccessor(this, "Shop.yml");
+		KilledCounter = new ConfigAccessor(this, "kills.yml");
 		reloadConfig();
 		
 		//Save Defaults if needed

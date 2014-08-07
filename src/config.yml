@@ -1,5 +1,12 @@
 title: '&2Toyz Token Shop'
+prefix: '&a[&bMyTokens&a]&f'
 
+#Mode settings
+settings:
+  pvp:
+    enablethrottle: true
+    killthrottle: 3
+  
 #Modes to drop Tokens
 modes:
   #Player Vs Monster (WIP)

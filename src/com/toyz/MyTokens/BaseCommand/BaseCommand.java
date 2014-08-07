@@ -1,9 +1,11 @@
 package com.toyz.MyTokens.BaseCommand;
 
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
+import com.toyz.MyTokens.MyTokens;
 import com.toyz.MyTokens.BaseCommand.Handler.IssueCommands;
 import com.toyz.MyTokens.BaseCommand.Commands.*;
 
@@ -24,10 +26,10 @@ public class BaseCommand implements CommandExecutor {
 	
 	protected static void sendMessage(String Message){
 		if(Info.isPlayer()){
-			Info.getPlayer().sendMessage(Message);
+			Info.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', MyTokens._plugin.getConfig().getString("prefix")) + " " + Message);
 		}
 		if(Info.isConsole()){
-			Info.getConsole().sendMessage(Message);
+			Info.getConsole().sendMessage(ChatColor.translateAlternateColorCodes('&', MyTokens._plugin.getConfig().getString("prefix")) + " " + Message);
 		}
 	}
 }

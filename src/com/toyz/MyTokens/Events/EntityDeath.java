@@ -3,6 +3,7 @@ package com.toyz.MyTokens.Events;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.*;
@@ -32,6 +33,19 @@ public class EntityDeath implements Listener {
 				return;
 			}
 			if(MathHelper.ShouldDropOnKill()){
+				if(MyTokens._plugin.getConfig().getBoolean("settings.pvp.enablethrottle")){
+					int allowed = MyTokens._plugin.getConfig().getInt("settings.pvp.killthrottle");
+					
+					if(MyTokens.KilledCounter.getConfig().getString("kill." + _player.getUniqueId().toString() + killed.getUniqueId().toString() + ".amount") == null){
+						MyTokens.KilledCounter.getConfig().set("kill." + _player.getUniqueId().toString() + killed.getUniqueId().toString() + ".amount", 1);
+					}else{
+						if(MyTokens.KilledCounter.getConfig().getInt("kill." + _player.getUniqueId().toString() + killed.getUniqueId().toString() + ".amount") < allowed){
+							MyTokens.KilledCounter.getConfig().set("kill." + _player.getUniqueId().toString() + killed.getUniqueId().toString() + ".amount", MyTokens.KilledCounter.getConfig().getInt(_player.getUniqueId().toString() + killed.getUniqueId().toString() + ".amount") + 1);
+						}else{
+							return;
+						}
+					}
+				}
 				int Drop = MathHelper.randInt(MyTokens._plugin.getConfig().getInt("Drop.kills.min"), MyTokens._plugin.getConfig().getInt("Drop.kills.max"));
 				
 				ConfigurationSection dropitem = MyTokens._plugin.getConfig().getConfigurationSection("dropitem");
@@ -49,7 +63,7 @@ public class EntityDeath implements Listener {
 					ItemStack droppedItem = Item.CreateItem(dropitem.getString("item.id"), dropitem.getString("item.name") + "  [" + Drop + "]", msgs, 0, true);
 					org.bukkit.entity.Item i = _player.getWorld().dropItem(_player.getLocation(), droppedItem);
 					i.setPickupDelay(dropitem.getInt("item.delay"));
-					_player.sendMessage(MessageHelper.Format(_player, dropitem.getString("alert"), Drop + ""));
+					_player.sendMessage(ChatColor.translateAlternateColorCodes('&', MyTokens._plugin.getConfig().getString("prefix")) + " " + MessageHelper.Format(_player, dropitem.getString("alert"), Drop + ""));
 				}else if(dropmsg.getBoolean("say")){
 					int Current = MyTokens.UserTokens.getConfig().getInt(_player.getUniqueId().toString());
 					Current = Current + Drop;
@@ -57,7 +71,7 @@ public class EntityDeath implements Listener {
 					for(String msg : dropmsg.getStringList("messages")){
 						String f = msg;
 						f = MessageHelper.Format(_player, f, Drop + "");
-						_player.sendMessage(f);
+						_player.sendMessage(ChatColor.translateAlternateColorCodes('&', MyTokens._plugin.getConfig().getString("prefix")) + " " + f);
 					}
 				}
 				//Current = GetAmount + Current;
