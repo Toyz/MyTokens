@@ -2,6 +2,7 @@ package com.toyz.MyTokens.Events;
 
 import java.util.*;
 
+import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
@@ -51,7 +52,7 @@ public class BlockBreak implements Listener {
 					ItemStack droppedItem = Item.CreateItem(dropitem.getString("item.id"), dropitem.getString("item.name") + "  [" + Drop + "]", msgs, 0, true);
 					org.bukkit.entity.Item i = _player.getWorld().dropItem(e.getBlock().getLocation(), droppedItem);
 					i.setPickupDelay(dropitem.getInt("item.delay"));
-					_player.sendMessage(MessageHelper.Format(_player, dropitem.getString("alert"), Drop + ""));
+					_player.sendMessage(ChatColor.translateAlternateColorCodes('&', MyTokens._plugin.getConfig().getString("prefix")) + " " + MessageHelper.Format(_player, dropitem.getString("alert"), Drop + ""));
 				}else if(dropmsg.getBoolean("say")){
 					int Current = MyTokens.UserTokens.getConfig().getInt(_player.getUniqueId().toString());
 					Current = Current + Drop;
@@ -59,7 +60,7 @@ public class BlockBreak implements Listener {
 					for(String msg : dropmsg.getStringList("messages")){
 						String f = msg;
 						f = MessageHelper.Format(_player, f, Drop + "");
-						_player.sendMessage(f);
+						_player.sendMessage(ChatColor.translateAlternateColorCodes('&', MyTokens._plugin.getConfig().getString("prefix")) + " " + f);
 					}
 				}
 			}
