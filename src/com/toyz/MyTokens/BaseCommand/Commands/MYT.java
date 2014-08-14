@@ -8,6 +8,7 @@ import com.toyz.MyTokens.BaseCommand.BaseCommand;
 import com.toyz.MyTokens.BaseCommand.Handler.IssueCommands;
 import com.toyz.MyTokens.Tools.*;
 import com.toyz.MyTokens.Utils.MessageHelper;
+import com.toyz.MyTokens.sql.SQLhandler;
 public class MYT extends BaseCommand{
 	private static IssueCommands _cmd = null;
 	private static String _Permission = "mytokens.myt";
@@ -57,8 +58,11 @@ public class MYT extends BaseCommand{
 					sendMessage(MessageHelper.Format(null, "&4User is offline"));
 					return;
 				}else{
-					int GivingTokens = MyTokens.UserTokens.getConfig().getInt(Getter.getUniqueId().toString());
-					int TakingTokens = MyTokens.UserTokens.getConfig().getInt(_cmd.getPlayer().getUniqueId().toString());
+					SQLhandler sql = new SQLhandler(MyTokens._plugin);
+					int GivingTokens = sql.GetBalance(Getter);//MyTokens.UserTokens.getConfig().getInt(Getter.getUniqueId().toString());
+					sql.GetSQL().close();
+					int TakingTokens = sql.GetBalance(_cmd.getPlayer());//MyTokens.UserTokens.getConfig().getInt(_cmd.getPlayer().getUniqueId().toString());
+					sql.GetSQL().close();
 					
 					int Giving = 0;
 					try{
@@ -80,8 +84,12 @@ public class MYT extends BaseCommand{
 					GivingTokens = GivingTokens + Giving;
 					TakingTokens = TakingTokens - Giving;
 					
-					 MyTokens.UserTokens.getConfig().set(Getter.getUniqueId().toString(), GivingTokens);
-					 MyTokens.UserTokens.getConfig().set(_cmd.getPlayer().getUniqueId().toString(), TakingTokens);
+					sql.SetBalance(Getter, GivingTokens);
+					sql.GetSQL().close();
+					sql.SetBalance(_cmd.getPlayer(), TakingTokens);
+					sql.GetSQL().close();
+					 //MyTokens.UserTokens.getConfig().set(Getter.getUniqueId().toString(), GivingTokens);
+					 //MyTokens.UserTokens.getConfig().set(_cmd.getPlayer().getUniqueId().toString(), TakingTokens);
 					 
 					 Getter.sendMessage(MessageHelper.Format(null, "You got " + Giving + " tokens from " + _cmd.getPlayer().getName()));
 					 sendMessage(MessageHelper.Format(null, "You sent " + Giving + " tokens to " + Getter.getName()));

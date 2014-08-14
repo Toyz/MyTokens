@@ -16,6 +16,7 @@ import com.toyz.MyTokens.MyTokens;
 import com.toyz.MyTokens.Tools.Item;
 import com.toyz.MyTokens.Tools.TokenBlock;
 import com.toyz.MyTokens.Utils.MessageHelper;
+import com.toyz.MyTokens.sql.SQLhandler;
 
 public class BlockBreak implements Listener {
 	@EventHandler
@@ -27,6 +28,10 @@ public class BlockBreak implements Listener {
 		}
 		
 		if(_player.getGameMode() == GameMode.CREATIVE){
+			return;
+		}
+		
+		if(e.isCancelled()){
 			return;
 		}
 		
@@ -54,9 +59,13 @@ public class BlockBreak implements Listener {
 					i.setPickupDelay(dropitem.getInt("item.delay"));
 					_player.sendMessage(ChatColor.translateAlternateColorCodes('&', MyTokens._plugin.getConfig().getString("prefix")) + " " + MessageHelper.Format(_player, dropitem.getString("alert"), Drop + ""));
 				}else if(dropmsg.getBoolean("say")){
-					int Current = MyTokens.UserTokens.getConfig().getInt(_player.getUniqueId().toString());
+					SQLhandler sql = new SQLhandler(MyTokens._plugin);
+					int Current = sql.GetBalance(_player);//MyTokens.UserTokens.getConfig().getInt(_player.getUniqueId().toString());
+					sql.GetSQL().close();
 					Current = Current + Drop;
-					MyTokens.UserTokens.getConfig().set(_player.getUniqueId().toString(), Current);
+					sql.SetBalance(_player, Current);
+					sql.GetSQL().close();
+					//MyTokens.UserTokens.getConfig().set(_player.getUniqueId().toString(), Current);
 					for(String msg : dropmsg.getStringList("messages")){
 						String f = msg;
 						f = MessageHelper.Format(_player, f, Drop + "");

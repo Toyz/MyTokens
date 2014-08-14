@@ -1,11 +1,25 @@
 title: '&2Toyz Token Shop'
 prefix: '&a[&bMyTokens&a]&f'
 
-#Mode settings
+#only one can be abled at one time
+database:
+  sqlite:
+    use: true
+    file: mytokens.db
+  mysql:
+    use: false
+    host: 127.0.0.1
+    database: mytokens
+    port: 3306
+    user: root
+    password: password
+
+#Mode settings (Do not use! Work in Progress)
 settings:
   pvp:
-    enablethrottle: true
+    enablethrottle: false
     killthrottle: 3
+    timeout: 30 #seconds
   
 #Modes to drop Tokens
 modes:

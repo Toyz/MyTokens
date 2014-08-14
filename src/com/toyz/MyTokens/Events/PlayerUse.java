@@ -11,6 +11,7 @@ import org.bukkit.inventory.ItemStack;
 
 import com.toyz.MyTokens.MyTokens;
 import com.toyz.MyTokens.Utils.MessageHelper;
+import com.toyz.MyTokens.sql.SQLhandler;
 
 public class PlayerUse implements Listener {
 	 @EventHandler
@@ -39,10 +40,13 @@ public class PlayerUse implements Listener {
 						 return;
 				     }
 					 
-					 int tokens = MyTokens.UserTokens.getConfig().getInt(e.getPlayer().getUniqueId().toString());
+					 SQLhandler sql = new SQLhandler(MyTokens._plugin);
+					 int tokens = sql.GetBalance(e.getPlayer());
+					 sql.GetSQL().close();//MyTokens.UserTokens.getConfig().getInt(e.getPlayer().getUniqueId().toString());
 					 tokens = tokens + got;
 					 
-					 MyTokens.UserTokens.getConfig().set(e.getPlayer().getUniqueId().toString(), tokens);
+					 sql.SetBalance(e.getPlayer(), tokens);
+					 //MyTokens.UserTokens.getConfig().set(e.getPlayer().getUniqueId().toString(), tokens);
 					 
 					 e.getPlayer().sendMessage(MessageHelper.Format(e.getPlayer(), dropitem.getString("used"), amount));
 					 int index = e.getPlayer().getInventory().getHeldItemSlot();

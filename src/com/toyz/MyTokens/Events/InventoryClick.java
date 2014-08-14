@@ -12,6 +12,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import com.toyz.MyTokens.MyTokens;
 import com.toyz.MyTokens.Utils.*;
+import com.toyz.MyTokens.sql.SQLhandler;
 
 public class InventoryClick  implements Listener {
 	 @EventHandler
@@ -28,10 +29,12 @@ public class InventoryClick  implements Listener {
 			 e.setCancelled(true);
 			 int index = e.getSlot() + 1;
 			 if(index < 54){
+				 SQLhandler sql = new SQLhandler(MyTokens._plugin);
 				 ConfigurationSection cs = MyTokens.TokenShop.getConfig().getConfigurationSection("Shop." + index);
 				 System.out.println(cs.getStringList("commands"));
 				 
-				 int Tokens = MyTokens.UserTokens.getConfig().getInt(e.getWhoClicked().getUniqueId().toString());
+				 int Tokens = sql.GetBalance((Player)e.getWhoClicked());
+				 sql.GetSQL().close();//MyTokens.UserTokens.getConfig().getInt(e.getWhoClicked().getUniqueId().toString());
 				 if(Tokens >= cs.getInt("cost")){
 					 for (String cmd : cs.getStringList("commands")){
 						 if (cmd.indexOf('/') == 0) {
@@ -42,7 +45,8 @@ public class InventoryClick  implements Listener {
 						 Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), ChatColor.translateAlternateColorCodes('&', cmd));
 					 }
 					 Tokens = Tokens - cs.getInt("cost");
-					 MyTokens.UserTokens.getConfig().set(e.getWhoClicked().getUniqueId().toString(), Tokens);
+					 sql.SetBalance((Player)e.getWhoClicked(), Tokens);
+					 //MyTokens.UserTokens.getConfig().set(e.getWhoClicked().getUniqueId().toString(), Tokens);
 					 
 					 //Update Last Object
 					 ItemStack i = e.getInventory().getItem(53);

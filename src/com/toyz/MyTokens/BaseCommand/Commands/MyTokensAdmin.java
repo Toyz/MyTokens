@@ -8,6 +8,7 @@ import com.toyz.MyTokens.BaseCommand.BaseCommand;
 import com.toyz.MyTokens.BaseCommand.Handler.IssueCommands;
 import com.toyz.MyTokens.Tools.*;
 import com.toyz.MyTokens.Utils.MessageHelper;
+import com.toyz.MyTokens.sql.SQLhandler;
 public class MyTokensAdmin extends BaseCommand{
 	private static IssueCommands _cmd = null;
 	private static String _Permission = "mytokens.admin";
@@ -64,6 +65,7 @@ public class MyTokensAdmin extends BaseCommand{
 				if(_cmd.getArgs().length >= 3){
 					Player givee = Bukkit.getPlayer(_cmd.getArg(1));
 					if(givee != null){
+						SQLhandler sql = new SQLhandler(MyTokens._plugin);
 						int Giving = 0;
 						try{
 							Giving = Integer.valueOf(_cmd.getArg(2)).intValue();
@@ -77,11 +79,14 @@ public class MyTokensAdmin extends BaseCommand{
 							return;
 						}
 						
-						int Current = MyTokens.UserTokens.getConfig().getInt(givee.getUniqueId().toString());
+						int Current = sql.GetBalance(givee);
+						sql.GetSQL().close();//MyTokens.UserTokens.getConfig().getInt(givee.getUniqueId().toString());
 						Current = Giving + Current;
 						
 						//System.out.println(givee.getUniqueId().toString() + " = " + givee.getName() + " - Giving: " + Giving + " - Total: " + Current + "");
-						MyTokens.UserTokens.getConfig().set(givee.getUniqueId().toString(), Current);
+						//MyTokens.UserTokens.getConfig().set(givee.getUniqueId().toString(), Current);
+						sql.SetBalance(givee, Current);
+						sql.GetSQL().close();
 						givee.sendMessage(MessageHelper.Format(null, "You were given %amount tokens!", Giving + ""));
 					}else{
 						sendMessage(MessageHelper.Format(null, "&4Player is currently offline"));
@@ -101,9 +106,12 @@ public class MyTokensAdmin extends BaseCommand{
 				}
 			}
 				if(_cmd.getArgs().length >= 2){
+					SQLhandler sql = new SQLhandler(MyTokens._plugin);
 					Player givee = Bukkit.getPlayer(_cmd.getArg(1));
 					
-					MyTokens.UserTokens.getConfig().set(givee.getUniqueId().toString(), 0); 
+					//MyTokens.UserTokens.getConfig().set(givee.getUniqueId().toString(), 0); 
+					sql.SetBalance(givee, 0);
+					sql.GetSQL().close();
 					givee.sendMessage(MessageHelper.Format(null, "Your Tokens have been reset to 0"));
 				}
 		}

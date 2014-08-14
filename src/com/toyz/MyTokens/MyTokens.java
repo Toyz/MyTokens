@@ -21,10 +21,10 @@ import com.toyz.MyTokens.Events.*;
 import com.toyz.MyTokens.Tools.*;
 import com.toyz.MyTokens.Utils.ConfigAccessor;
 import com.toyz.MyTokens.Utils.MetricsLite;
+import com.toyz.MyTokens.sql.SQLhandler;
 
 public class MyTokens extends JavaPlugin{
 	public static Logger logger = null;
-	public static ConfigAccessor UserTokens = null;
 	public static ConfigAccessor TokenShop = null;
 	public static MyTokens _plugin = null;
 	public static Hashtable<Integer, ItemStack> Items = null;
@@ -55,12 +55,10 @@ public class MyTokens extends JavaPlugin{
 		    }
 		 
 		//Load some Configs!
-		UserTokens = new ConfigAccessor(this, "Tokens.yml");
 		TokenShop = new ConfigAccessor(this, "Shop.yml");
 		KilledCounter = new ConfigAccessor(this, "kills.yml");
 		
 		//Save Defaults if needed
-		UserTokens.saveDefaultConfig();
 		TokenShop.saveDefaultConfig();
 		KilledCounter.saveDefaultConfig();
 		saveDefaultConfig();
@@ -83,17 +81,9 @@ public class MyTokens extends JavaPlugin{
 		PluginManager pm = Bukkit.getServer().getPluginManager();
 		pm.registerEvents(new InventoryClick(), this);
 		pm.registerEvents(new BlockBreak(), this);
-		pm.registerEvents(new PlayerJoin(), this);
 		pm.registerEvents(new PlayerUse(), this);
 		pm.registerEvents(new EntityDeath(), this);
 		
-		//Start the auto saving
-		Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new Runnable(){
-			@Override
-			public void run() {
-				MyTokens.UserTokens.saveConfig();
-			}
-		}, 800L, 800L);
 	}
 	
 	public void CheckConfig(){
@@ -113,33 +103,28 @@ public class MyTokens extends JavaPlugin{
 	
 	//Disable Plugin
 	public void onDisable() {
-		UserTokens.saveConfig();
-		TokenShop.saveConfig();
+		//TokenShop.saveConfig();
 		KilledCounter.saveConfig();
 		
-		UserTokens = null;
 		TokenShop = null;
 		KilledCounter = null;
 	}
 	
 	public void Reload(){
-		UserTokens.saveConfig();
-		TokenShop.saveConfig();
+		//TokenShop.saveConfig();
 		KilledCounter.saveConfig();
 		
-		UserTokens = null;
 		TokenShop = null;
 		KilledCounter = null;
 		
 		//Load some Configs!
-		UserTokens = new ConfigAccessor(this, "Tokens.yml");
 		TokenShop = new ConfigAccessor(this, "Shop.yml");
 		KilledCounter = new ConfigAccessor(this, "kills.yml");
 		reloadConfig();
 		
 		//Save Defaults if needed
-		UserTokens.saveDefaultConfig();
 		TokenShop.saveDefaultConfig();
+		KilledCounter.saveDefaultConfig();
 		saveDefaultConfig();
 				
 		//Build our list of items!

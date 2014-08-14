@@ -24,4 +24,8 @@ public class MathHelper {
 
 		return randomNum;
 	}
+	
+	public static int currentTimeMillis() {
+	    return (int) (System.currentTimeMillis() % Integer.MAX_VALUE);
+	}
 }

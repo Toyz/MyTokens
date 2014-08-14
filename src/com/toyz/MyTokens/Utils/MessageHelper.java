@@ -6,6 +6,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import com.toyz.MyTokens.MyTokens;
+import com.toyz.MyTokens.sql.SQLhandler;
 
 public class MessageHelper {
 	private static Hashtable<String, String> _replace = null;
@@ -31,8 +32,10 @@ public class MessageHelper {
 	
 	private static void BuildReplaceTable(Player _player){
 		if(_player != null){
+			SQLhandler sql = new SQLhandler(MyTokens._plugin);
 			_replace.put("%player", _player.getName());
-			_replace.put("%total", MyTokens.UserTokens.getConfig().getString(_player.getUniqueId().toString()));
+			_replace.put("%total", sql.GetBalance(_player) + "");
+			sql.GetSQL().close();
 		}
 		_replace.put("%amount", "0");
 	}
@@ -58,8 +61,10 @@ public class MessageHelper {
 	
 	private static void BuildReplaceTable(Player _player, String dropped){
 		if(_player != null){
+			SQLhandler sql = new SQLhandler(MyTokens._plugin);
 			_replace.put("%player", _player.getName());
-			_replace.put("%total", MyTokens.UserTokens.getConfig().getString(_player.getUniqueId().toString()));
+			_replace.put("%total", sql.GetBalance(_player) + "");
+			sql.GetSQL().close();
 		}
 		_replace.put("%amount", dropped);
 	}
