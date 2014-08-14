@@ -95,7 +95,51 @@ public class MyTokensAdmin extends BaseCommand{
 					sendMessage(_invaidUsage + " /mytokens give user amount");
 				}
 			}
-		
+		if(_cmd.getArg(0).equalsIgnoreCase("take")){
+			if(_cmd.isPlayer()){
+				if(!_cmd.getPlayer().hasPermission(_Permission + ".take")){
+					if(!_cmd.getPlayer().isOp()){
+						sendMessage("You do not have permission to run this command");
+						return;
+					}
+				}
+			}
+				if(_cmd.getArgs().length >= 3){
+					Player givee = Bukkit.getPlayer(_cmd.getArg(1));
+					if(givee != null){
+						SQLhandler sql = new SQLhandler(MyTokens._plugin);
+						int Giving = 0;
+						try{
+							Giving = Integer.valueOf(_cmd.getArg(2)).intValue();
+						}catch (Exception e){
+							sendMessage("Must be a number");
+							return;
+						}
+						
+						if(Giving <= 0){
+							sendMessage(MessageHelper.Format(null, "&4You must send more then 0 tokens!"));
+							return;
+						}
+						
+						int Current = sql.GetBalance(givee);
+						sql.GetSQL().close();//MyTokens.UserTokens.getConfig().getInt(givee.getUniqueId().toString());
+						if(Current < Giving){
+							Giving = Current;
+						}
+						Current = Current - Giving;
+						
+						//System.out.println(givee.getUniqueId().toString() + " = " + givee.getName() + " - Giving: " + Giving + " - Total: " + Current + "");
+						//MyTokens.UserTokens.getConfig().set(givee.getUniqueId().toString(), Current);
+						sql.SetBalance(givee, Current);
+						sql.GetSQL().close();
+						givee.sendMessage(MessageHelper.Format(null, "You had %amount tokens taken from you!", Giving + ""));
+					}else{
+						sendMessage(MessageHelper.Format(null, "&4Player is currently offline"));
+					}
+				}else{
+					sendMessage(_invaidUsage + " /mytokens give user amount");
+				}
+			}
 		if(_cmd.getArg(0).equalsIgnoreCase("reset")){
 			if(_cmd.isPlayer()){
 				if(!_cmd.getPlayer().hasPermission(_Permission + ".reset")){

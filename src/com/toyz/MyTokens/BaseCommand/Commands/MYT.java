@@ -26,6 +26,12 @@ public class MYT extends BaseCommand{
 	
 	private static void Tigger(){
 		if(_cmd.getArgs().length <= _minArgs){
+			if(!_cmd.getPlayer().hasPermission(_Permission + ".open")){
+				if(!_cmd.getPlayer().isOp()){
+					sendMessage(MessageHelper.Format(_cmd.getPlayer(), "&4You do not have permission to use this command"));
+					return;
+				}
+			}
 			Inventory invy = new Inventory(_cmd.getPlayer(), MyTokens.Items);
 			invy.Open();
 			return;
@@ -42,17 +48,23 @@ public class MYT extends BaseCommand{
 			}
 		}
 		if(_cmd.getArg(0).equalsIgnoreCase("bal")){
+			if(!_cmd.getPlayer().hasPermission(_Permission + ".bal")){
+				if(!_cmd.getPlayer().isOp()){
+					sendMessage(MessageHelper.Format(_cmd.getPlayer(), "&4You do not have permission to use this command"));
+					return;
+				}
+			}
 			sendMessage(MessageHelper.Format(_cmd.getPlayer(), "Your current Token Balance is &a%total"));
 			return;
 		}
 		if(_cmd.getArg(0).equalsIgnoreCase("give")){
-			if(_cmd.getArgs().length >= 3){
-				if(!_cmd.getPlayer().hasPermission(_Permission + ".give")){
-					if(!_cmd.getPlayer().isOp()){
-						sendMessage(MessageHelper.Format(_cmd.getPlayer(), "&4You do not have permission to use this command"));
-						return;
-					}
+			if(!_cmd.getPlayer().hasPermission(_Permission + ".give")){
+				if(!_cmd.getPlayer().isOp()){
+					sendMessage(MessageHelper.Format(_cmd.getPlayer(), "&4You do not have permission to use this command"));
+					return;
 				}
+			}
+			if(_cmd.getArgs().length >= 3){
 				Player Getter = Bukkit.getPlayer(_cmd.getArg(1));
 				if(Getter == null){
 					sendMessage(MessageHelper.Format(null, "&4User is offline"));
