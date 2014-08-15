@@ -14,12 +14,12 @@ database:
     port: 3306
     user: root
     password: password
-
-#Mode settings (Do not use! Work in Progress)
+    
 settings:
   shop:
     #max is 6 if you use 1 only first 7 items will show
     rows: 1 
+  #WIP but is working
   pvp:
     enablethrottle: false
     killthrottle: 3

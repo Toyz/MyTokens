@@ -39,43 +39,48 @@ public class SQLHelper {
 	            if(cs.getBoolean("sqlite.use")){
 	            	stmt.execute("pragma journal_mode=wal");
 	            }
-	            this.close();
 		 } catch (SQLException e) {  
 	            e.printStackTrace();  
 		 } 
 	}
 	
-	public Connection getConn(){
+	public Boolean IsSQLLite(){
 		ConfigurationSection cs = _plugin.getConfig().getConfigurationSection("database");
-		
-		if(cs.getBoolean("sqlite.use") && !cs.getBoolean("mysql.use")){
-			try {
-				Class.forName("org.sqlite.JDBC");
-				conn = DriverManager.getConnection(
-						"jdbc:sqlite:" + _plugin.getDataFolder() + File.separatorChar + 
-						((cs.getString("sqlite.file") != null) ? cs.getString("sqlite.file") : "mytokens.db"));
-			} catch (ClassNotFoundException | SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		return cs.getBoolean("sqlite.use");
+	}
+	
+	public Connection getConn(){
+		if(conn == null){
+				ConfigurationSection cs = _plugin.getConfig().getConfigurationSection("database");
+				if(cs.getBoolean("sqlite.use") && !cs.getBoolean("mysql.use")){
+					try {
+						Class.forName("org.sqlite.JDBC");
+						conn = DriverManager.getConnection(
+								"jdbc:sqlite:" + _plugin.getDataFolder() + File.separatorChar + 
+								((cs.getString("sqlite.file") != null) ? cs.getString("sqlite.file") : "mytokens.db"));
+					} catch (ClassNotFoundException | SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+				}
+				
+				if(!cs.getBoolean("sqlite.use") && cs.getBoolean("mysql.use")){
+					try {
+						Class.forName("com.mysql.jdbc.Driver");
+						conn = DriverManager.getConnection("jdbc:mysql://" 
+								+ ((cs.getString("mysql.host") != null) ? cs.getString("mysql.host") : "localhost")
+								+ ":" + ((cs.getString("mysql.port") != null) ? cs.getString("mysql.port") : "3306")
+								+ "/" + ((cs.getString("mysql.database") != null) ? cs.getString("mysql.database") : "mytokens"),
+								((cs.getString("mysql.user") != null) ? cs.getString("mysql.user") : "root"),
+								((cs.getString("mysql.password") != null) ? cs.getString("mysql.password") : ""));
+					} catch (ClassNotFoundException | SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+				}
+				
 			}
-			
-		}
-		
-		if(!cs.getBoolean("sqlite.use") && cs.getBoolean("mysql.use")){
-			try {
-				Class.forName("com.mysql.jdbc.Driver");
-				conn = DriverManager.getConnection("jdbc:mysql://" 
-						+ ((cs.getString("mysql.host") != null) ? cs.getString("mysql.host") : "localhost")
-						+ ":" + ((cs.getString("mysql.port") != null) ? cs.getString("mysql.port") : "3306")
-						+ "/" + ((cs.getString("mysql.database") != null) ? cs.getString("mysql.database") : "mytokens"),
-						((cs.getString("mysql.user") != null) ? cs.getString("mysql.user") : "root"),
-						((cs.getString("mysql.password") != null) ? cs.getString("mysql.password") : ""));
-			} catch (ClassNotFoundException | SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-		}
+		}	
 		return conn;
 	}
 	

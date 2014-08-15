@@ -33,32 +33,27 @@ public class EntityDeath implements Listener {
 					return;
 				}
 				if(MathHelper.ShouldDropOnKill()){
+					SQLhandler sql = MyTokens.sql;
 					if(MyTokens._plugin.getConfig().getBoolean("settings.pvp.enablethrottle")){
 						int allowed = MyTokens._plugin.getConfig().getInt("settings.pvp.killthrottle");
 						int timeout = MyTokens._plugin.getConfig().getInt("settings.pvp.timeout");
 						
 						int totalTimeOut = (timeout * 1000) + MathHelper.currentTimeMillis();
-						
-						SQLhandler sql = new SQLhandler(MyTokens._plugin);
 						int kills = sql.GetKillCount(_player, killed);
-						sql.GetSQL().close();
+
 						int tmp = sql.GetTimeOut(_player, killed);
-						sql.GetSQL().close();
 						if(kills < allowed){
 							if(MathHelper.currentTimeMillis() < tmp || tmp == 0){
 								kills = kills + 1;
 								sql.SetKillCount(_player, killed, kills, totalTimeOut);
-								sql.GetSQL().close();
 							}else{
 								sql.SetKillCount(_player, killed, 1, totalTimeOut);
-								sql.GetSQL().close();
 							}
 						}else{
 							if(MathHelper.currentTimeMillis() < tmp){
 								return;
 							}else{
 								sql.SetKillCount(_player, killed, 1, totalTimeOut);
-								sql.GetSQL().close();
 							}
 						}
 					}
@@ -81,13 +76,9 @@ public class EntityDeath implements Listener {
 						i.setPickupDelay(dropitem.getInt("item.delay"));
 						_player.sendMessage(ChatColor.translateAlternateColorCodes('&', MyTokens._plugin.getConfig().getString("prefix")) + " " + MessageHelper.Format(_player, dropitem.getString("alert"), Drop + ""));
 					}else if(dropmsg.getBoolean("say")){
-						 SQLhandler sql = new SQLhandler(MyTokens._plugin);
 						int Current = sql.GetBalance(_player);
-						sql.GetSQL().close();//MyTokens.UserTokens.getConfig().getInt(_player.getUniqueId().toString());
 						Current = Current + Drop;
 						sql.SetBalance(_player, Current);
-						sql.GetSQL().close();
-						//MyTokens.UserTokens.getConfig().set(_player.getUniqueId().toString(), Current);
 						for(String msg : dropmsg.getStringList("messages")){
 							String f = msg;
 							f = MessageHelper.Format(_player, f, Drop + "");

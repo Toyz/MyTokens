@@ -34,6 +34,7 @@ public class MyTokens extends JavaPlugin{
 	public static Hashtable<Integer, ItemStack> BreakAbleItems = null;
 	public static List<TokenBlock> DropBlocks = null;
 	public static ConsoleCommandSender console = null;
+	public static SQLhandler sql = null;
 	public static List<String> AdminHelpCommands = Arrays.asList(
 			"&b/MyTokens reload &f- Reloads the plugin", 
 			"&b/MyTokens give username amount &f- Gives amount of tokens to a user",
@@ -90,14 +91,8 @@ public class MyTokens extends JavaPlugin{
 		pm.registerEvents(new PlayerUse(), this);
 		pm.registerEvents(new EntityDeath(), this);
 		
-		SQLHelper sql = new SQLHelper(this);
-		try {
-			sql.getConn().close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		sql = null;
+		sql = new SQLhandler(this);
+		sql.GetSQL().getConn();
 	}
 	
 	public void CheckConfig(){

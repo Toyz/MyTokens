@@ -26,7 +26,7 @@ public class SQLhandler {
 	
 	//get/set balance
 	public int GetBalance(Player player){
-		_sql = null;
+		//_sql = null;
 		ResultSet rs = null;
 		try {
 			String sql = "SELECT bal from " + MyTokens._plugin.getConfig().getString("database.prefix") + "Balance where player = ?";
@@ -46,7 +46,7 @@ public class SQLhandler {
 	}
 	
 	public void SetBalance(Player player, int balance){
-		_sql = null;
+		//_sql = null;
 		String sql = "REPLACE INTO " + MyTokens._plugin.getConfig().getString("database.prefix") + "Balance (player, username, bal) VALUES(?, ?, ?)";
 		try{
 			PreparedStatement statement = GetSQL().preparedStatement(sql);
@@ -62,7 +62,7 @@ public class SQLhandler {
 	
 	//get/set kills
 	public int GetKillCount(Player killer, Player killed){
-		_sql = null;
+		//_sql = null;
 		ResultSet rs = null;
 		String sql = "SELECT kcnt from " + MyTokens._plugin.getConfig().getString("database.prefix") + "Kills where killer = ? and killed = ? limit 1";
 		try{
@@ -82,8 +82,12 @@ public class SQLhandler {
 		}
 	}
 	
+	public Boolean IsSQLLite(){
+		return this.GetSQL().IsSQLLite();
+	}
+	
 	public void SetKillCount(Player killer, Player killed, int count, int timeout){
-		_sql = null;
+		//_sql = null;
 		String sql = "REPLACE INTO " + MyTokens._plugin.getConfig().getString("database.prefix") + "Kills (killer, killer_name, killed, killed_name, kcnt, timeout) VALUES(?, ?, ?, ?, ?, ?)";
 		try{
 			PreparedStatement statement = GetSQL().preparedStatement(sql);
@@ -100,7 +104,7 @@ public class SQLhandler {
 	}
 	
 	public int GetTimeOut(Player killer, Player killed){
-		_sql = null;
+		//_sql = null;
 		ResultSet rs = null;
 		String sql = "SELECT kcnt from " + MyTokens._plugin.getConfig().getString("database.prefix") + "Kills where killer = ? and killed = ? limit 1";
 		try{

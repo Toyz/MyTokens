@@ -32,12 +32,14 @@ public class InventoryClick  implements Listener {
 					MyTokens.DropConfig.saveConfig();
 					((Player)e.getWhoClicked()).sendMessage(ChatColor.translateAlternateColorCodes('&', MyTokens._plugin.getConfig().getString("prefix")) + " Shops.yml has been updated");
 					return;
-				}				
-				TokenBlock tb = MyTokens.DropBlocks.get(e.getRawSlot());
+				}	
+				
 				
 				if ((e.getCurrentItem() == null) || (e.getCurrentItem().getType() == Material.AIR)) {
 					 return;
 				 }
+				
+				TokenBlock tb = MyTokens.DropBlocks.get(e.getRawSlot());
 				
 				if(e.getCurrentItem().getType() == Material.REDSTONE_BLOCK)
 					tb.SetEnabled(true);
@@ -82,12 +84,10 @@ public class InventoryClick  implements Listener {
 			 int _size = MyTokens._plugin.getConfig().getInt("settings.shop.rows");
 			 int _rowLength = _size * 9;
 			 if(index < _rowLength){
-				 SQLhandler sql = new SQLhandler(MyTokens._plugin);
+				 SQLhandler sql = MyTokens.sql;
 				 ConfigurationSection cs = MyTokens.TokenShop.getConfig().getConfigurationSection("Shop." + index);
-				 System.out.println(cs.getStringList("commands"));
 				 
 				 int Tokens = sql.GetBalance((Player)e.getWhoClicked());
-				 sql.GetSQL().close();//MyTokens.UserTokens.getConfig().getInt(e.getWhoClicked().getUniqueId().toString());
 				 if(Tokens >= cs.getInt("cost") || ((Player)e.getWhoClicked()).hasPermission("mytokens.admin.nopay") ||((Player)e.getWhoClicked()).isOp()){
 					 for (String cmd : cs.getStringList("commands")){
 						 if (cmd.indexOf('/') == 0) {

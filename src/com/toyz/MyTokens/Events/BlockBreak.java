@@ -62,12 +62,11 @@ public class BlockBreak implements Listener {
 					i.setPickupDelay(dropitem.getInt("item.delay"));
 					_player.sendMessage(ChatColor.translateAlternateColorCodes('&', MyTokens._plugin.getConfig().getString("prefix")) + " " + MessageHelper.Format(_player, dropitem.getString("alert"), Drop + ""));
 				}else if(dropmsg.getBoolean("say")){
-					SQLhandler sql = new SQLhandler(MyTokens._plugin);
+					SQLhandler sql = MyTokens.sql;
 					int Current = sql.GetBalance(_player);//MyTokens.UserTokens.getConfig().getInt(_player.getUniqueId().toString());
-					sql.GetSQL().close();
 					Current = Current + Drop;
 					sql.SetBalance(_player, Current);
-					sql.GetSQL().close();
+					//sql.GetSQL().commit();
 					//MyTokens.UserTokens.getConfig().set(_player.getUniqueId().toString(), Current);
 					for(String msg : dropmsg.getStringList("messages")){
 						String f = msg;
