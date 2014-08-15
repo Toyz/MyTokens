@@ -47,11 +47,12 @@ public class SQLhandler {
 	
 	public void SetBalance(Player player, int balance){
 		_sql = null;
-		String sql = "REPLACE INTO " + MyTokens._plugin.getConfig().getString("database.prefix") + "Balance (player, bal) VALUES(?, ?)";
+		String sql = "REPLACE INTO " + MyTokens._plugin.getConfig().getString("database.prefix") + "Balance (player, username, bal) VALUES(?, ?, ?)";
 		try{
 			PreparedStatement statement = GetSQL().preparedStatement(sql);
 			statement.setString(1, player.getUniqueId().toString());
-			statement.setInt(2, balance);
+			statement.setString(2, player.getName());
+			statement.setInt(3, balance);
 			statement.execute();
 			
 		} catch (SQLException e) {
@@ -83,13 +84,15 @@ public class SQLhandler {
 	
 	public void SetKillCount(Player killer, Player killed, int count, int timeout){
 		_sql = null;
-		String sql = "REPLACE INTO " + MyTokens._plugin.getConfig().getString("database.prefix") + "Kills (killer, killed, kcnt, timeout) VALUES(?, ?, ?, ?)";
+		String sql = "REPLACE INTO " + MyTokens._plugin.getConfig().getString("database.prefix") + "Kills (killer, killer_name, killed, killed_name, kcnt, timeout) VALUES(?, ?, ?, ?, ?, ?)";
 		try{
 			PreparedStatement statement = GetSQL().preparedStatement(sql);
 			statement.setString(1, killer.getUniqueId().toString());
-			statement.setString(2, killed.getUniqueId().toString());
-			statement.setInt(3, count);
-			statement.setInt(4, timeout);
+			statement.setString(2, killer.getName());
+			statement.setString(3, killed.getUniqueId().toString());
+			statement.setString(4, killed.getName());
+			statement.setInt(5, count);
+			statement.setInt(6, timeout);
 			statement.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();

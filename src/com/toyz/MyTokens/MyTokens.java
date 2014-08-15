@@ -45,8 +45,7 @@ public class MyTokens extends JavaPlugin{
 			"&b/myt breakable&f- Opens Up the window listing all blocks that drop tokens",
 			"&b/myt give username amount &f- Gives said user a amount of tokens",
 			"&b/myt bal &f- Shows your current token balance");
-	
-	public static ConfigAccessor KilledCounter = null;
+
 	//Enable Plugin
 	public void onEnable() {
 		console = Bukkit.getServer().getConsoleSender();
@@ -62,12 +61,10 @@ public class MyTokens extends JavaPlugin{
 		 
 		//Load some Configs!
 		TokenShop = new ConfigAccessor(this, "Shop.yml");
-		KilledCounter = new ConfigAccessor(this, "kills.yml");
 		DropConfig = new ConfigAccessor(this, "dropsettings.yml");
 		
 		//Save Defaults if needed
 		TokenShop.saveDefaultConfig();
-		KilledCounter.saveDefaultConfig();
 		DropConfig.saveDefaultConfig();
 		saveDefaultConfig();
 		
@@ -121,30 +118,24 @@ public class MyTokens extends JavaPlugin{
 	//Disable Plugin
 	public void onDisable() {
 		//TokenShop.saveConfig();
-		KilledCounter.saveConfig();
 		
 		TokenShop = null;
-		KilledCounter = null;
 		DropConfig = null;
 	}
 	
 	public void Reload(){
 		//TokenShop.saveConfig();
-		KilledCounter.saveConfig();
 		
 		TokenShop = null;
 		DropConfig = null;
-		KilledCounter = null;
 		
 		//Load some Configs!
 		TokenShop = new ConfigAccessor(this, "Shop.yml");
-		KilledCounter = new ConfigAccessor(this, "kills.yml");
 		DropConfig = new ConfigAccessor(this, "dropsettings.yml");
 		reloadConfig();
 		
 		//Save Defaults if needed
 		TokenShop.saveDefaultConfig();
-		KilledCounter.saveDefaultConfig();
 		DropConfig.saveDefaultConfig();
 		saveDefaultConfig();
 				

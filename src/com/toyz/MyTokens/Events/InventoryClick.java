@@ -28,12 +28,12 @@ public class InventoryClick  implements Listener {
 			if(((Player)e.getWhoClicked()).hasPermission("mytokens.admin.enableblocks") || ((Player)e.getWhoClicked()).isOp()){
 				ConfigurationSection cs = MyTokens.DropConfig.getConfig().getConfigurationSection("Drop.break.blocks");
 
-				if(e.getSlot() == 53){
+				if(e.getRawSlot() == 53){
 					MyTokens.DropConfig.saveConfig();
 					((Player)e.getWhoClicked()).sendMessage(ChatColor.translateAlternateColorCodes('&', MyTokens._plugin.getConfig().getString("prefix")) + " Shops.yml has been updated");
 					return;
 				}				
-				TokenBlock tb = MyTokens.DropBlocks.get(e.getSlot());
+				TokenBlock tb = MyTokens.DropBlocks.get(e.getRawSlot());
 				
 				if ((e.getCurrentItem() == null) || (e.getCurrentItem().getType() == Material.AIR)) {
 					 return;
@@ -74,14 +74,11 @@ public class InventoryClick  implements Listener {
 		 }
 		 if ((e.getInventory().getTitle() != null) && (e.getInventory().getTitle().equalsIgnoreCase(title)))
 		 {
+			 e.setCancelled(true);
 			 if ((e.getCurrentItem() == null) || (e.getCurrentItem().getType() == Material.AIR)) {
 				 return;
 			 }
-			 if (e.getSlot() == -1) {
-				 e.setCancelled(true);
-			 }
-			 e.setCancelled(true);
-			 int index = e.getSlot() + 1;
+			 int index = e.getRawSlot() + 1;
 			 int _size = MyTokens._plugin.getConfig().getInt("settings.shop.rows");
 			 int _rowLength = _size * 9;
 			 if(index < _rowLength){
@@ -91,7 +88,7 @@ public class InventoryClick  implements Listener {
 				 
 				 int Tokens = sql.GetBalance((Player)e.getWhoClicked());
 				 sql.GetSQL().close();//MyTokens.UserTokens.getConfig().getInt(e.getWhoClicked().getUniqueId().toString());
-				 if(Tokens >= cs.getInt("cost")){
+				 if(Tokens >= cs.getInt("cost") || ((Player)e.getWhoClicked()).hasPermission("mytokens.admin.nopay") ||((Player)e.getWhoClicked()).isOp()){
 					 for (String cmd : cs.getStringList("commands")){
 						 if (cmd.indexOf('/') == 0) {
 							 cmd = cmd.substring(1);
@@ -100,8 +97,12 @@ public class InventoryClick  implements Listener {
 						 cmd = cmd.replace("%player", e.getWhoClicked().getName());
 						 Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), ChatColor.translateAlternateColorCodes('&', cmd));
 					 }
-					 Tokens = Tokens - cs.getInt("cost");
-					 sql.SetBalance((Player)e.getWhoClicked(), Tokens);
+					 if(!((Player)e.getWhoClicked()).hasPermission("mytokens.admin.nopay")){
+						 if(!((Player)e.getWhoClicked()).isOp()){
+							 Tokens = Tokens - cs.getInt("cost");
+							 sql.SetBalance((Player)e.getWhoClicked(), Tokens);
+						 }
+					 }
 					 //MyTokens.UserTokens.getConfig().set(e.getWhoClicked().getUniqueId().toString(), Tokens);
 					 
 					 //Update Last Object

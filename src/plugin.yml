@@ -26,6 +26,9 @@ permissions:
   mytokens.admin.enableblocks:
     description: Allows a user to disable certain blocks from dropping items
     default: op
+  mytokens.admin.nopay:
+    description: Allows staff to bypass shop price
+    default: op
   #public commands permissions
   mytokens.myt.open:
     description: Allows player to open the shop
