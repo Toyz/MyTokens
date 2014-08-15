@@ -1,5 +1,6 @@
 package com.toyz.MyTokens.Events;
 
+import java.text.DecimalFormat;
 import java.util.*;
 
 import org.bukkit.*;
@@ -11,15 +12,63 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import com.toyz.MyTokens.MyTokens;
+import com.toyz.MyTokens.Tools.BuildTokenBlocks;
+import com.toyz.MyTokens.Tools.Item;
+import com.toyz.MyTokens.Tools.TokenBlock;
 import com.toyz.MyTokens.Utils.*;
 import com.toyz.MyTokens.sql.SQLhandler;
 
 public class InventoryClick  implements Listener {
-	 @EventHandler
+	@SuppressWarnings("deprecation")
+	@EventHandler
 	 public void onInventoryClick(InventoryClickEvent e){
 		 String title = ChatColor.translateAlternateColorCodes('&', MyTokens._plugin.getConfig().getString("title"));
 		 if((e.getInventory().getTitle() != null) && (e.getInventory().getTitle().equalsIgnoreCase("Breakable Blocks"))){
-			 e.setCancelled(true);
+			e.setCancelled(true);
+			if(((Player)e.getWhoClicked()).hasPermission("mytokens.admin.enableblocks") || ((Player)e.getWhoClicked()).isOp()){
+				if(e.getSlot() == 53){
+					MyTokens.DropConfig.saveConfig();
+					((Player)e.getWhoClicked()).sendMessage(ChatColor.translateAlternateColorCodes('&', MyTokens._plugin.getConfig().getString("prefix")) + " Shops.yml has been updated");
+					return;
+				}
+				ConfigurationSection cs = MyTokens.DropConfig.getConfig().getConfigurationSection("Drop.break.blocks");
+				
+				TokenBlock tb = MyTokens.DropBlocks.get(e.getSlot());
+				
+				if ((e.getCurrentItem() == null) || (e.getCurrentItem().getType() == Material.AIR)) {
+					 return;
+				 }
+				
+				if(e.getCurrentItem().getType() == Material.REDSTONE_BLOCK)
+					tb.SetEnabled(true);
+				else
+					tb.SetEnabled(false);
+				//tb.SetEnabled(e.getCurrentItem().getType() != Material.REDSTONE_BLOCK);
+				
+				cs.set(tb.getType().getId() + ".enabled", tb.enabled());
+				MyTokens.BreakAbleItems = BuildTokenBlocks.BuildBreakAbleList();
+				
+				int id = 0;
+				for(TokenBlock block: MyTokens.DropBlocks){
+					DecimalFormat df = new DecimalFormat("#%");
+					
+					List<String> lore = Arrays.asList(
+							ChatColor.WHITE + "Max: " + ChatColor.GOLD + block.maxDrop() + "",
+							ChatColor.WHITE + "Min: " + ChatColor.GOLD + block.minDrop() + "",
+							ChatColor.WHITE + "Percent of Drop: " + ChatColor.GOLD + df.format(block.getChance()),
+							ChatColor.WHITE + "Drops Enabled: " + ChatColor.GOLD + (block.enabled() ? "Yes" : "No")
+					);
+					int BlockID = block.enabled() ? block.getType().getId() : 152;
+					e.getInventory().setItem(id, Item.CreateItem(BlockID + "", block.getType().name().replace("_", " ").toLowerCase(), lore, 1, false));
+					id++;
+				}
+				((Player)e.getWhoClicked()).updateInventory();
+				
+				return;
+			}
+			//if(e.getCurrentItem().getType() == Material.REDSTONE_BLOCK){
+				
+			//}
 		 }
 		 if ((e.getInventory().getTitle() != null) && (e.getInventory().getTitle().equalsIgnoreCase(title)))
 		 {

@@ -46,6 +46,9 @@ public class Inventory {
 			Item.player = _player;
 			ItemStack lastItem = Item.CreateItem(cs.getString("id"), cs.getString("name"), cs.getStringList("lore"), 0, cs.getBoolean("glow"));
 			_Inventory.setItem((_rowLength - 1), lastItem);
+		}else{
+			ItemStack lastItem = Item.CreateItem(347 + "", "Save Changes", Arrays.asList("Save your settings to Shops.yml"), 0, true);
+			_Inventory.setItem((_rowLength - 1), lastItem);
 		}
 	}
 	

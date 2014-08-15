@@ -13,6 +13,8 @@ Drop:
         #Min and max of tokens droped
         min: 1
         max: 5
+        #enable or disable this block from dropping tokens
+        enabled: true
         #percent of how often to drop (0.0 - 1.0)
         percent: 1
       #Grass
@@ -20,12 +22,16 @@ Drop:
         #Min and max of tokens droped
         min: 1
         max: 5
+        #enable or disable this block from dropping tokens
+        enabled: true
         #percent of how often to drop (0.0 - 1.0)
         percent: 1
-      #Dirt
+      #Stone
       1:
         #Min and max of tokens droped
         min: 1
         max: 5
+        #enable or disable this block from dropping tokens
+        enabled: true
         #percent of how often to drop (0.0 - 1.0)
         percent: 1

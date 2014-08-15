@@ -42,6 +42,7 @@ public class MyTokens extends JavaPlugin{
 	
 	public static List<String> PublicHelpCommands = Arrays.asList(
 			"&b/myt &f- Opens Up the Tokens Shop", 
+			"&b/myt breakable&f- Opens Up the window listing all blocks that drop tokens",
 			"&b/myt give username amount &f- Gives said user a amount of tokens",
 			"&b/myt bal &f- Shows your current token balance");
 	

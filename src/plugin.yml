@@ -17,12 +17,24 @@ permissions:
   mytokens.admin.give:
     description: Gives a player tokens
     default: op
+  mytokens.admin.take:
+    description: Takes tokens from a player
+    default: op
   mytokens.admin.reset:
     description: Resets a user to 0 tokens
+    default: op
+  mytokens.admin.enableblocks:
+    description: Allows a user to disable certain blocks from dropping items
     default: op
   #public commands permissions
   mytokens.myt.open:
     description: Allows player to open the shop
+    default: true
+  mytokens.myt.bal:
+    description: Allows user to see there balance
+    default: true
+  mytokens.myt.breakable:
+    description: Allows user to see what blocks are breakable
     default: true
   mytokens.myt.give:
     description: Allows players to trade tokens

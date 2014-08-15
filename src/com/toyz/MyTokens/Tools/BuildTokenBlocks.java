@@ -30,7 +30,8 @@ public class BuildTokenBlocks {
 				block = new TokenBlock(Material.getMaterial(id), 
 						cs.getDouble(key + ".percent"), 
 						cs.getInt(key + ".min"),
-						cs.getInt(key + ".max"));
+						cs.getInt(key + ".max"),
+						cs.getBoolean(key + ".enabled"));
 				MyTokens.console.sendMessage(ChatColor.GREEN + "[Loaded]" +ChatColor.WHITE + " Block " + block.getType().toString() +" with drop rate of " + cs.getDouble(key + ".percent"));
 				_blocks.add(block);
 			}
@@ -48,10 +49,11 @@ public class BuildTokenBlocks {
 			List<String> lore = Arrays.asList(
 					ChatColor.WHITE + "Max: " + ChatColor.GOLD + block.maxDrop() + "",
 					ChatColor.WHITE + "Min: " + ChatColor.GOLD + block.minDrop() + "",
-					ChatColor.WHITE + "Percent of Drop: " + ChatColor.GOLD + df.format(block.getChance())
+					ChatColor.WHITE + "Percent of Drop: " + ChatColor.GOLD + df.format(block.getChance()),
+					ChatColor.WHITE + "Drops Enabled: " + ChatColor.GOLD + (block.enabled() ? "Yes" : "No")
 			);
-			
-			items.put(id, Item.CreateItem(block.getType().getId() + "", block.getType().name().replace("_", " ").toLowerCase(), lore, 1, false));
+			int BlockID = block.enabled() ? block.getType().getId() : 152;
+			items.put(id, Item.CreateItem(BlockID + "", block.getType().name().replace("_", " ").toLowerCase(), lore, 1, false));
 			id++;
 		}
 		return items;

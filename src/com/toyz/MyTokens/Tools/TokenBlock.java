@@ -11,13 +11,14 @@ public class TokenBlock {
     private double chance;
     private int min;
     private int max;
-    
-    public TokenBlock(Material type, double chance, int min, int max)
+    private Boolean enabled;
+    public TokenBlock(Material type, double chance, int min, int max, Boolean enabled)
     {
       this.type = type;
       this.chance = chance;
       this.min = min;
       this.max = max;
+      this.enabled = enabled;
     }
     
     public Material getType()
@@ -38,6 +39,14 @@ public class TokenBlock {
     public int maxDrop()
     {
       return this.max;
+    }
+    
+    public Boolean enabled(){
+    	return this.enabled;
+    }
+    
+    public void SetEnabled(Boolean Enabled){
+    	this.enabled = Enabled;
     }
     
     public boolean shouldDrop()
