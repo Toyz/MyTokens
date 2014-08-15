@@ -16,10 +16,14 @@ database:
 
 #Mode settings (Do not use! Work in Progress)
 settings:
+  shop:
+    #max is 6 if you use 1 only first 7 items will show
+    rows: 1 
   pvp:
     enablethrottle: false
     killthrottle: 3
-    timeout: 30 #seconds
+    #Cooldown till you can kill that person again in seconds
+    timeout: 30
   
 #Modes to drop Tokens
 modes:

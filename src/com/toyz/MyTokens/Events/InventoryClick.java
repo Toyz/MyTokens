@@ -28,7 +28,9 @@ public class InventoryClick  implements Listener {
 			 }
 			 e.setCancelled(true);
 			 int index = e.getSlot() + 1;
-			 if(index < 54){
+			 int _size = MyTokens._plugin.getConfig().getInt("settings.shop.rows");
+			 int _rowLength = _size * 9;
+			 if(index < _rowLength){
 				 SQLhandler sql = new SQLhandler(MyTokens._plugin);
 				 ConfigurationSection cs = MyTokens.TokenShop.getConfig().getConfigurationSection("Shop." + index);
 				 System.out.println(cs.getStringList("commands"));
@@ -49,7 +51,7 @@ public class InventoryClick  implements Listener {
 					 //MyTokens.UserTokens.getConfig().set(e.getWhoClicked().getUniqueId().toString(), Tokens);
 					 
 					 //Update Last Object
-					 ItemStack i = e.getInventory().getItem(53);
+					 ItemStack i = e.getInventory().getItem(_rowLength - 1);
 					 ConfigurationSection cs1 = MyTokens._plugin.getConfig().getConfigurationSection("infoitem");
 					 ItemMeta l = i.getItemMeta();
 					 List<String> lore = new ArrayList<String>();
