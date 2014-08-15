@@ -15,7 +15,7 @@ public class BuildTokenBlocks {
 	public static List<TokenBlock> BlocksThatDrop(){
 		List<TokenBlock> _blocks = new ArrayList<TokenBlock>();
 		
-		ConfigurationSection cs = MyTokens._plugin.getConfig().getConfigurationSection("Drop.break.blocks");
+		ConfigurationSection cs = MyTokens.DropConfig.getConfig().getConfigurationSection("Drop.break.blocks");
 		
 		for (String key : cs.getKeys(false)){
 			int id = 0;

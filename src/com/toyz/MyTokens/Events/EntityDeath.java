@@ -62,7 +62,7 @@ public class EntityDeath implements Listener {
 							}
 						}
 					}
-					int Drop = MathHelper.randInt(MyTokens._plugin.getConfig().getInt("Drop.kills.min"), MyTokens._plugin.getConfig().getInt("Drop.kills.max"));
+					int Drop = MathHelper.randInt(MyTokens.DropConfig.getConfig().getInt("Drop.kills.min"), MyTokens.DropConfig.getConfig().getInt("Drop.kills.max"));
 					
 					ConfigurationSection dropitem = MyTokens._plugin.getConfig().getConfigurationSection("dropitem");
 					ConfigurationSection dropmsg = MyTokens._plugin.getConfig().getConfigurationSection("dropmsg");

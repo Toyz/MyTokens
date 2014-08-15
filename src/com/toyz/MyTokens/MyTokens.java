@@ -26,6 +26,7 @@ import com.toyz.MyTokens.sql.SQLhandler;
 public class MyTokens extends JavaPlugin{
 	public static Logger logger = null;
 	public static ConfigAccessor TokenShop = null;
+	public static ConfigAccessor DropConfig = null;
 	public static MyTokens _plugin = null;
 	public static Hashtable<Integer, ItemStack> Items = null;
 	public static List<TokenBlock> DropBlocks = null;
@@ -57,10 +58,12 @@ public class MyTokens extends JavaPlugin{
 		//Load some Configs!
 		TokenShop = new ConfigAccessor(this, "Shop.yml");
 		KilledCounter = new ConfigAccessor(this, "kills.yml");
+		DropConfig = new ConfigAccessor(this, "dropsettings.yml");
 		
 		//Save Defaults if needed
 		TokenShop.saveDefaultConfig();
 		KilledCounter.saveDefaultConfig();
+		DropConfig.saveDefaultConfig();
 		saveDefaultConfig();
 		
 		//Update configs if needed
@@ -108,6 +111,7 @@ public class MyTokens extends JavaPlugin{
 		
 		TokenShop = null;
 		KilledCounter = null;
+		DropConfig = null;
 	}
 	
 	public void Reload(){
@@ -115,16 +119,19 @@ public class MyTokens extends JavaPlugin{
 		KilledCounter.saveConfig();
 		
 		TokenShop = null;
+		DropConfig = null;
 		KilledCounter = null;
 		
 		//Load some Configs!
 		TokenShop = new ConfigAccessor(this, "Shop.yml");
 		KilledCounter = new ConfigAccessor(this, "kills.yml");
+		DropConfig = new ConfigAccessor(this, "dropsettings.yml");
 		reloadConfig();
 		
 		//Save Defaults if needed
 		TokenShop.saveDefaultConfig();
 		KilledCounter.saveDefaultConfig();
+		DropConfig.saveDefaultConfig();
 		saveDefaultConfig();
 				
 		//Build our list of items!

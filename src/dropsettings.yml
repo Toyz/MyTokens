@@ -1,0 +1,31 @@
+#Drop Probilty
+Drop:
+  kills:
+    #Min and max of tokens droped
+    min: 1
+    max: 10
+    #percent of how often to drop (0.0 - 1.0)
+    percent: 1
+  break:
+    blocks:
+      #Iron Ore
+      15:
+        #Min and max of tokens droped
+        min: 1
+        max: 5
+        #percent of how often to drop (0.0 - 1.0)
+        percent: 1
+      #Grass
+      2:
+        #Min and max of tokens droped
+        min: 1
+        max: 5
+        #percent of how often to drop (0.0 - 1.0)
+        percent: 1
+      #Dirt
+      1:
+        #Min and max of tokens droped
+        min: 1
+        max: 5
+        #percent of how often to drop (0.0 - 1.0)
+        percent: 1

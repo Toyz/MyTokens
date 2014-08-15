@@ -7,7 +7,7 @@ import com.toyz.MyTokens.MyTokens;
 public class MathHelper {
 	public static Boolean ShouldDropOnKill() {
 		Random r = new Random();
-		if (r.nextDouble() <= MyTokens._plugin.getConfig().getDouble("Drop.kills.percent")) {
+		if (r.nextDouble() <= MyTokens.DropConfig.getConfig().getDouble("Drop.kills.percent")) {
 			return true;
 		}
 		return false;
