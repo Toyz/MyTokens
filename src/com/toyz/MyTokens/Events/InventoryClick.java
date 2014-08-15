@@ -18,6 +18,9 @@ public class InventoryClick  implements Listener {
 	 @EventHandler
 	 public void onInventoryClick(InventoryClickEvent e){
 		 String title = ChatColor.translateAlternateColorCodes('&', MyTokens._plugin.getConfig().getString("title"));
+		 if((e.getInventory().getTitle() != null) && (e.getInventory().getTitle().equalsIgnoreCase("Breakable Blocks"))){
+			 e.setCancelled(true);
+		 }
 		 if ((e.getInventory().getTitle() != null) && (e.getInventory().getTitle().equalsIgnoreCase(title)))
 		 {
 			 if ((e.getCurrentItem() == null) || (e.getCurrentItem().getType() == Material.AIR)) {

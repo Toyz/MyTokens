@@ -3,6 +3,7 @@ prefix: '&a[&bMyTokens&a]&f'
 
 #only one can be abled at one time
 database:
+  prefix: 'myt_'
   sqlite:
     use: true
     file: mytokens.db
