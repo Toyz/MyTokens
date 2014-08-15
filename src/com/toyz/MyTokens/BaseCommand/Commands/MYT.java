@@ -1,6 +1,7 @@
 package com.toyz.MyTokens.BaseCommand.Commands;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import com.toyz.MyTokens.MyTokens;
@@ -32,7 +33,9 @@ public class MYT extends BaseCommand{
 					return;
 				}
 			}
-			Inventory invy = new Inventory(_cmd.getPlayer(), MyTokens.Items);
+			Inventory invy = new Inventory(_cmd.getPlayer(),
+					MyTokens.Items, true, ChatColor.translateAlternateColorCodes('&', MyTokens._plugin.getConfig().getString("title"))
+					, true);
 			invy.Open();
 			return;
 		}
@@ -46,6 +49,17 @@ public class MYT extends BaseCommand{
 			for(String msg : MyTokens.PublicHelpCommands){
 				sendMessage(MessageHelper.Format(null, msg));
 			}
+		}
+		if(_cmd.getArg(0).equalsIgnoreCase("breakable")){
+			if(!_cmd.getPlayer().hasPermission(_Permission + ".breakable")){
+				if(!_cmd.getPlayer().isOp()){
+					sendMessage(MessageHelper.Format(_cmd.getPlayer(), "&4You do not have permission to use this command"));
+					return;
+				}
+			}
+			Inventory invy = new Inventory(_cmd.getPlayer(), MyTokens.BreakAbleItems, false, "Breakable Blocks", false);
+			invy.Open();
+			return;
 		}
 		if(_cmd.getArg(0).equalsIgnoreCase("bal")){
 			if(!_cmd.getPlayer().hasPermission(_Permission + ".bal")){

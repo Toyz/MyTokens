@@ -31,6 +31,7 @@ public class MyTokens extends JavaPlugin{
 	public static ConfigAccessor DropConfig = null;
 	public static MyTokens _plugin = null;
 	public static Hashtable<Integer, ItemStack> Items = null;
+	public static Hashtable<Integer, ItemStack> BreakAbleItems = null;
 	public static List<TokenBlock> DropBlocks = null;
 	public static ConsoleCommandSender console = null;
 	public static List<String> AdminHelpCommands = Arrays.asList(
@@ -78,6 +79,7 @@ public class MyTokens extends JavaPlugin{
 		
 		//Build are block list
 		DropBlocks = BuildTokenBlocks.BlocksThatDrop(); 
+		BreakAbleItems = BuildTokenBlocks.BuildBreakAbleList();
 		
 		//Load Our Commands
 		getCommand("myt").setExecutor(new BaseCommand());
@@ -151,5 +153,6 @@ public class MyTokens extends JavaPlugin{
 				
 		//Build are block list
 		DropBlocks = BuildTokenBlocks.BlocksThatDrop(); 
+		BreakAbleItems = BuildTokenBlocks.BuildBreakAbleList();
 	}
 }

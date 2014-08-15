@@ -16,19 +16,20 @@ public class Inventory {
 	private Hashtable<Integer, ItemStack> _items = null;
 	private org.bukkit.inventory.Inventory _Inventory = null;
 	private int _size = 0;
-	private int _rowLength = 0;
-	public Inventory(Player p, Hashtable<Integer, ItemStack> items){
+	private int _rowLength = 54;
+	public Inventory(Player p, Hashtable<Integer, ItemStack> items, Boolean useRow, String title, Boolean ShowTokenBal){
 		_player = p;
 		_items = items;
 		
 		_size = MyTokens._plugin.getConfig().getInt("settings.shop.rows");
-		_rowLength = _size * 9;
-		_Inventory = Bukkit.createInventory(null, _rowLength, ChatColor.translateAlternateColorCodes('&', MyTokens._plugin.getConfig().getString("title")));
+		if(useRow)
+			_rowLength = _size * 9;
+		_Inventory = Bukkit.createInventory(null, _rowLength, title);
 		
-		Build();
+		Build(ShowTokenBal);
 	}
 	
-	private void Build(){
+	private void Build(Boolean ShowTokenBal){
 		int i = 0;
 		Iterator<Map.Entry<Integer, ItemStack>> it = _items.entrySet().iterator();
 		
@@ -40,10 +41,12 @@ public class Inventory {
 			}
 			//MyTokens.console.sendMessage(MessageHelper.Format(null, "&Loaded item @ index " + entry.getKey()));
 		}
-		ConfigurationSection cs = MyTokens._plugin.getConfig().getConfigurationSection("infoitem");
-		Item.player = _player;
-		ItemStack lastItem = Item.CreateItem(cs.getString("id"), cs.getString("name"), cs.getStringList("lore"), 0, cs.getBoolean("glow"));
-		_Inventory.setItem((_rowLength - 1), lastItem);
+		if(ShowTokenBal){
+			ConfigurationSection cs = MyTokens._plugin.getConfig().getConfigurationSection("infoitem");
+			Item.player = _player;
+			ItemStack lastItem = Item.CreateItem(cs.getString("id"), cs.getString("name"), cs.getStringList("lore"), 0, cs.getBoolean("glow"));
+			_Inventory.setItem((_rowLength - 1), lastItem);
+		}
 	}
 	
 	public void Open(){

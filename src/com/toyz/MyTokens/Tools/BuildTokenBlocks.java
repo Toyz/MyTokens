@@ -1,15 +1,18 @@
 package com.toyz.MyTokens.Tools;
 
+import java.text.DecimalFormat;
 import java.util.*;
 
 import org.bukkit.*;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.inventory.ItemStack;
 
 import com.toyz.MyTokens.MyTokens;
 
 public class BuildTokenBlocks {
 	private static TokenBlock block;
 
+	@SuppressWarnings("deprecation")
 	public static List<TokenBlock> BlocksThatDrop(){
 		List<TokenBlock> _blocks = new ArrayList<TokenBlock>();
 		
@@ -34,5 +37,23 @@ public class BuildTokenBlocks {
 		}
 		
 		return _blocks;
+	}
+	
+	public static Hashtable<Integer, ItemStack> BuildBreakAbleList(){
+		Hashtable<Integer, ItemStack> items = new Hashtable<Integer, ItemStack>();
+		int id = 0;
+		for(TokenBlock block : MyTokens.DropBlocks){
+			DecimalFormat df = new DecimalFormat("#%");
+			
+			List<String> lore = Arrays.asList(
+					ChatColor.WHITE + "Max: " + ChatColor.GOLD + block.maxDrop() + "",
+					ChatColor.WHITE + "Min: " + ChatColor.GOLD + block.minDrop() + "",
+					ChatColor.WHITE + "Percent of Drop: " + ChatColor.GOLD + df.format(block.getChance())
+			);
+			
+			items.put(id, Item.CreateItem(block.getType().getId() + "", block.getType().name().replace("_", " ").toLowerCase(), lore, 1, false));
+			id++;
+		}
+		return items;
 	}
 }
