@@ -58,6 +58,9 @@ public class MYT extends BaseCommand{
 				}
 			}
 			Inventory invy = new Inventory(_cmd.getPlayer(), MyTokens.BreakAbleItems, false, "Breakable Blocks", false);
+			if(!_cmd.getPlayer().hasPermission("mytokens.admin.enableblocks"))
+				if(!_cmd.getPlayer().isOp())
+					invy.getInventory().setItem(53, null);
 			invy.Open();
 			return;
 		}

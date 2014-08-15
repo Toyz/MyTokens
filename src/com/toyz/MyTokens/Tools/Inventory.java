@@ -29,6 +29,10 @@ public class Inventory {
 		Build(ShowTokenBal);
 	}
 	
+	public org.bukkit.inventory.Inventory getInventory(){
+		return this._Inventory;
+	}
+	
 	private void Build(Boolean ShowTokenBal){
 		int i = 0;
 		Iterator<Map.Entry<Integer, ItemStack>> it = _items.entrySet().iterator();
@@ -47,7 +51,7 @@ public class Inventory {
 			ItemStack lastItem = Item.CreateItem(cs.getString("id"), cs.getString("name"), cs.getStringList("lore"), 0, cs.getBoolean("glow"));
 			_Inventory.setItem((_rowLength - 1), lastItem);
 		}else{
-			ItemStack lastItem = Item.CreateItem(347 + "", "Save Changes", Arrays.asList("Save your settings to Shops.yml"), 0, true);
+			ItemStack lastItem = Item.CreateItem(347 + "", "Save Changes", Arrays.asList("Save your settings to Shops.yml", ChatColor.RED + "If you don't save Shops.yml", ChatColor.RED + "Settings will not stay on reload!"), 0, true);
 			_Inventory.setItem((_rowLength - 1), lastItem);
 		}
 	}

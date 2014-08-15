@@ -26,13 +26,13 @@ public class InventoryClick  implements Listener {
 		 if((e.getInventory().getTitle() != null) && (e.getInventory().getTitle().equalsIgnoreCase("Breakable Blocks"))){
 			e.setCancelled(true);
 			if(((Player)e.getWhoClicked()).hasPermission("mytokens.admin.enableblocks") || ((Player)e.getWhoClicked()).isOp()){
+				ConfigurationSection cs = MyTokens.DropConfig.getConfig().getConfigurationSection("Drop.break.blocks");
+
 				if(e.getSlot() == 53){
 					MyTokens.DropConfig.saveConfig();
 					((Player)e.getWhoClicked()).sendMessage(ChatColor.translateAlternateColorCodes('&', MyTokens._plugin.getConfig().getString("prefix")) + " Shops.yml has been updated");
 					return;
-				}
-				ConfigurationSection cs = MyTokens.DropConfig.getConfig().getConfigurationSection("Drop.break.blocks");
-				
+				}				
 				TokenBlock tb = MyTokens.DropBlocks.get(e.getSlot());
 				
 				if ((e.getCurrentItem() == null) || (e.getCurrentItem().getType() == Material.AIR)) {
@@ -43,7 +43,6 @@ public class InventoryClick  implements Listener {
 					tb.SetEnabled(true);
 				else
 					tb.SetEnabled(false);
-				//tb.SetEnabled(e.getCurrentItem().getType() != Material.REDSTONE_BLOCK);
 				
 				cs.set(tb.getType().getId() + ".enabled", tb.enabled());
 				MyTokens.BreakAbleItems = BuildTokenBlocks.BuildBreakAbleList();
@@ -65,6 +64,9 @@ public class InventoryClick  implements Listener {
 				((Player)e.getWhoClicked()).updateInventory();
 				
 				return;
+			}else{
+				e.getInventory().setItem(53, null);
+				((Player)e.getWhoClicked()).updateInventory();
 			}
 			//if(e.getCurrentItem().getType() == Material.REDSTONE_BLOCK){
 				
