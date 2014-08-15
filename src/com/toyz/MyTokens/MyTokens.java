@@ -2,6 +2,7 @@ package com.toyz.MyTokens;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Hashtable;
 import java.util.List;
@@ -21,6 +22,7 @@ import com.toyz.MyTokens.Events.*;
 import com.toyz.MyTokens.Tools.*;
 import com.toyz.MyTokens.Utils.ConfigAccessor;
 import com.toyz.MyTokens.Utils.MetricsLite;
+import com.toyz.MyTokens.sql.SQLHelper;
 import com.toyz.MyTokens.sql.SQLhandler;
 
 public class MyTokens extends JavaPlugin{
@@ -88,6 +90,14 @@ public class MyTokens extends JavaPlugin{
 		pm.registerEvents(new PlayerUse(), this);
 		pm.registerEvents(new EntityDeath(), this);
 		
+		SQLHelper sql = new SQLHelper(this);
+		try {
+			sql.getConn().close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		sql = null;
 	}
 	
 	public void CheckConfig(){
