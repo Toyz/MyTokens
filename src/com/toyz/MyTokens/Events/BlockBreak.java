@@ -43,6 +43,9 @@ public class BlockBreak implements Listener {
 		for (TokenBlock b : MyTokens.DropBlocks) {
 			if ((b.getType() == e.getBlock().getType()) && (b.shouldDrop()))
 			{
+				if(!b.enabled()){
+					return;
+				}
 				int Drop = b.calculateDropAmount();
 				
 				if(dropitem.getBoolean("drop")){
