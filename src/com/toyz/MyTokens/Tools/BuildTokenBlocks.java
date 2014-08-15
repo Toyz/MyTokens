@@ -1,10 +1,8 @@
 package com.toyz.MyTokens.Tools;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.configuration.ConfigurationSection;
 
 import com.toyz.MyTokens.MyTokens;

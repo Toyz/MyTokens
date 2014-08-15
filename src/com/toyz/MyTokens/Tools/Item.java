@@ -2,16 +2,14 @@ package com.toyz.MyTokens.Tools;
 
 import java.util.*;
 
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import com.toyz.MyTokens.MyTokens;
-import com.toyz.MyTokens.Utils.MessageHelper;
-import com.toyz.MyTokens.Utils.NMSUtils;
+import com.toyz.MyTokens.Utils.*;
 
 public class Item {
 	private Hashtable<Integer, ItemStack> items = null;

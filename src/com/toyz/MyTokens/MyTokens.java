@@ -33,7 +33,8 @@ public class MyTokens extends JavaPlugin{
 	public static ConsoleCommandSender console = null;
 	public static List<String> AdminHelpCommands = Arrays.asList(
 			"&b/MyTokens reload &f- Reloads the plugin", 
-			"&b/MyTokens give username amount &f- Gives said user a amount of tokens",
+			"&b/MyTokens give username amount &f- Gives amount of tokens to a user",
+			"&b/MyTokens take username amount &f- Takes said amount of tokens from user",
 			"&b/MyTokens reset username &f- Resets users tokens to 0");
 	
 	public static List<String> PublicHelpCommands = Arrays.asList(
