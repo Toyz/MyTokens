@@ -65,7 +65,7 @@ public class MyTokensAdmin extends BaseCommand{
 				if(_cmd.getArgs().length >= 3){
 					Player givee = Bukkit.getPlayer(_cmd.getArg(1));
 					if(givee != null){
-						SQLhandler sql = new SQLhandler(MyTokens._plugin);
+						SQLhandler sql = MyTokens.sql;
 						int Giving = 0;
 						try{
 							Giving = Integer.valueOf(_cmd.getArg(2)).intValue();
@@ -80,13 +80,11 @@ public class MyTokensAdmin extends BaseCommand{
 						}
 						
 						int Current = sql.GetBalance(givee);
-						sql.GetSQL().close();//MyTokens.UserTokens.getConfig().getInt(givee.getUniqueId().toString());
 						Current = Giving + Current;
 						
 						//System.out.println(givee.getUniqueId().toString() + " = " + givee.getName() + " - Giving: " + Giving + " - Total: " + Current + "");
 						//MyTokens.UserTokens.getConfig().set(givee.getUniqueId().toString(), Current);
 						sql.SetBalance(givee, Current);
-						sql.GetSQL().close();
 						givee.sendMessage(MessageHelper.Format(null, "You were given %amount tokens!", Giving + ""));
 					}else{
 						sendMessage(MessageHelper.Format(null, "&4Player is currently offline"));
@@ -107,7 +105,7 @@ public class MyTokensAdmin extends BaseCommand{
 				if(_cmd.getArgs().length >= 3){
 					Player givee = Bukkit.getPlayer(_cmd.getArg(1));
 					if(givee != null){
-						SQLhandler sql = new SQLhandler(MyTokens._plugin);
+						SQLhandler sql = MyTokens.sql;
 						int Giving = 0;
 						try{
 							Giving = Integer.valueOf(_cmd.getArg(2)).intValue();
@@ -122,7 +120,6 @@ public class MyTokensAdmin extends BaseCommand{
 						}
 						
 						int Current = sql.GetBalance(givee);
-						sql.GetSQL().close();//MyTokens.UserTokens.getConfig().getInt(givee.getUniqueId().toString());
 						if(Current < Giving){
 							Giving = Current;
 						}
@@ -131,7 +128,6 @@ public class MyTokensAdmin extends BaseCommand{
 						//System.out.println(givee.getUniqueId().toString() + " = " + givee.getName() + " - Giving: " + Giving + " - Total: " + Current + "");
 						//MyTokens.UserTokens.getConfig().set(givee.getUniqueId().toString(), Current);
 						sql.SetBalance(givee, Current);
-						sql.GetSQL().close();
 						givee.sendMessage(MessageHelper.Format(null, "You had %amount tokens taken from you!", Giving + ""));
 					}else{
 						sendMessage(MessageHelper.Format(null, "&4Player is currently offline"));
@@ -150,12 +146,11 @@ public class MyTokensAdmin extends BaseCommand{
 				}
 			}
 				if(_cmd.getArgs().length >= 2){
-					SQLhandler sql = new SQLhandler(MyTokens._plugin);
+					SQLhandler sql = MyTokens.sql;
 					Player givee = Bukkit.getPlayer(_cmd.getArg(1));
 					
 					//MyTokens.UserTokens.getConfig().set(givee.getUniqueId().toString(), 0); 
 					sql.SetBalance(givee, 0);
-					sql.GetSQL().close();
 					givee.sendMessage(MessageHelper.Format(null, "Your Tokens have been reset to 0"));
 				}
 		}

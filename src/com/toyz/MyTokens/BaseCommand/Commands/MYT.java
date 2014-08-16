@@ -87,11 +87,9 @@ public class MYT extends BaseCommand{
 					sendMessage(MessageHelper.Format(null, "&4User is offline"));
 					return;
 				}else{
-					SQLhandler sql = new SQLhandler(MyTokens._plugin);
+					SQLhandler sql = MyTokens.sql;
 					int GivingTokens = sql.GetBalance(Getter);//MyTokens.UserTokens.getConfig().getInt(Getter.getUniqueId().toString());
-					sql.GetSQL().close();
 					int TakingTokens = sql.GetBalance(_cmd.getPlayer());//MyTokens.UserTokens.getConfig().getInt(_cmd.getPlayer().getUniqueId().toString());
-					sql.GetSQL().close();
 					
 					int Giving = 0;
 					try{
@@ -114,9 +112,7 @@ public class MYT extends BaseCommand{
 					TakingTokens = TakingTokens - Giving;
 					
 					sql.SetBalance(Getter, GivingTokens);
-					sql.GetSQL().close();
 					sql.SetBalance(_cmd.getPlayer(), TakingTokens);
-					sql.GetSQL().close();
 					 //MyTokens.UserTokens.getConfig().set(Getter.getUniqueId().toString(), GivingTokens);
 					 //MyTokens.UserTokens.getConfig().set(_cmd.getPlayer().getUniqueId().toString(), TakingTokens);
 					 
