@@ -13,32 +13,29 @@ public class API {
 	}
 	
 	public static int GetBalance(Player player){
-		SQLhandler sql = new SQLhandler(_plugin);
+		SQLhandler sql = MyTokens.sql;
 		
 		int bal = sql.GetBalance(player);
-		sql.GetSQL().close();
 		return bal;
 	}
 	
 	public static void SetBalance(Player player, int balance){
-		SQLhandler sql = new SQLhandler(_plugin);
+		SQLhandler sql = MyTokens.sql;
 		
 		sql.SetBalance(player, balance);
-		sql.GetSQL().close();
 	}
 	
 	public static void AddKill(Player killer, Player killed, int times, int timeout){
 		timeout = timeout | 30;
-		SQLhandler sql = new SQLhandler(_plugin);
+		SQLhandler sql = MyTokens.sql;
 		
 		sql.SetKillCount(killer, killed, times, timeout);
 	}
 	
 	public static int GetTimesKilled(Player killer, Player killed){
-		SQLhandler sql = new SQLhandler(_plugin);
+		SQLhandler sql = MyTokens.sql;
 		
 		int times = sql.GetKillCount(killer, killed);
-		sql.GetSQL().close();
 		return times;
 	}
 }
