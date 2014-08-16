@@ -29,6 +29,9 @@ permissions:
   mytokens.admin.nopay:
     description: Allows staff to bypass shop price
     default: op
+  mytokens.admin.userbal:
+    description: Allows you to view another users balance
+    default: op
   #public commands permissions
   mytokens.myt.open:
     description: Allows player to open the shop

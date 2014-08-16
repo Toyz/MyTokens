@@ -1,6 +1,7 @@
 package com.toyz.MyTokens.BaseCommand.Commands;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import com.toyz.MyTokens.MyTokens;
@@ -39,6 +40,29 @@ public class MyTokensAdmin extends BaseCommand{
 			}
 			return;
 		}
+		if(_cmd.getArg(0).equalsIgnoreCase("bal")){
+			if(_cmd.isPlayer()){
+				if(!_cmd.getPlayer().hasPermission(_Permission + ".userbal")){
+					if(!_cmd.getPlayer().isOp()){
+						sendMessage("You do not have permission to run this command");
+						return;
+					}
+				}
+			}
+			
+			if(_cmd.getArgs().length >= 2){
+				Player toGet = Bukkit.getPlayer(_cmd.getArg(1));
+				
+				if(toGet != null)
+					sendMessage(ChatColor.BLUE + toGet.getName() + " (Nick: " + toGet.getDisplayName()+ ") " + ChatColor.WHITE + "has " + MyTokens.sql.GetBalance(toGet) + " Tokens.");
+				else{
+					sendMessage(MessageHelper.Format(null, "&4Player is currently offline"));
+				}
+			}else{
+				sendMessage(_invaidUsage + " /mytokens bal user");
+			}
+		}
+		
 		if(_cmd.getArg(0).equalsIgnoreCase("reload")){
 			if(_cmd.isPlayer()){
 				if(!_cmd.getPlayer().hasPermission(_Permission + ".reload")){

@@ -39,6 +39,7 @@ public class MyTokens extends JavaPlugin{
 			"&b/MyTokens reload &f- Reloads the plugin", 
 			"&b/MyTokens give username amount &f- Gives amount of tokens to a user",
 			"&b/MyTokens take username amount &f- Takes said amount of tokens from user",
+			"&b/MyTokens bal user &f- View a users token balance",
 			"&b/MyTokens reset username &f- Resets users tokens to 0");
 	
 	public static List<String> PublicHelpCommands = Arrays.asList(
