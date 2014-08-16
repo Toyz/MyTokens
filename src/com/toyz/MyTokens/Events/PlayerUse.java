@@ -40,13 +40,11 @@ public class PlayerUse implements Listener {
 						 return;
 				     }
 					 
-					 SQLhandler sql = new SQLhandler(MyTokens._plugin);
+					 SQLhandler sql = MyTokens.sql;
 					 int tokens = sql.GetBalance(e.getPlayer());
-					 sql.GetSQL().close();//MyTokens.UserTokens.getConfig().getInt(e.getPlayer().getUniqueId().toString());
 					 tokens = tokens + got;
 					 
 					 sql.SetBalance(e.getPlayer(), tokens);
-					 //MyTokens.UserTokens.getConfig().set(e.getPlayer().getUniqueId().toString(), tokens);
 					 
 					 e.getPlayer().sendMessage(MessageHelper.Format(e.getPlayer(), dropitem.getString("used"), amount));
 					 int index = e.getPlayer().getInventory().getHeldItemSlot();

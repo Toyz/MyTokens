@@ -32,10 +32,9 @@ public class MessageHelper {
 	
 	private static void BuildReplaceTable(Player _player){
 		if(_player != null){
-			SQLhandler sql = new SQLhandler(MyTokens._plugin);
+			SQLhandler sql = MyTokens.sql;
 			_replace.put("%player", _player.getName());
 			_replace.put("%total", sql.GetBalance(_player) + "");
-			sql.GetSQL().close();
 		}
 		_replace.put("%amount", "0");
 	}
@@ -61,10 +60,9 @@ public class MessageHelper {
 	
 	private static void BuildReplaceTable(Player _player, String dropped){
 		if(_player != null){
-			SQLhandler sql = new SQLhandler(MyTokens._plugin);
+			SQLhandler sql = MyTokens.sql;
 			_replace.put("%player", _player.getName());
 			_replace.put("%total", sql.GetBalance(_player) + "");
-			sql.GetSQL().close();
 		}
 		_replace.put("%amount", dropped);
 	}
