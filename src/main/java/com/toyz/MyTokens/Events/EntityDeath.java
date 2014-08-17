@@ -31,9 +31,9 @@ public class EntityDeath implements Listener {
     				if(!MyTokens._plugin.getConfig().getBoolean("modes.pve")){
     					return;
     				}
-    				if(MathHelper.ShouldDropOnKill()){
+    				if(MathHelper.getInstance().ShouldDropOnKill()){
     					SQLhandler sql = MyTokens.sql;
-    					int Drop = MathHelper.randInt(MyTokens.DropConfig.getConfig().getInt("Drop.kills.min"), MyTokens.DropConfig.getConfig().getInt("Drop.kills.max"));
+    					int Drop = MathHelper.getInstance().randInt(MyTokens.DropConfig.getConfig().getInt("Drop.kills.min"), MyTokens.DropConfig.getConfig().getInt("Drop.kills.max"));
     					
     					ConfigurationSection dropitem = MyTokens._plugin.getConfig().getConfigurationSection("dropitem");
     					ConfigurationSection dropmsg = MyTokens._plugin.getConfig().getConfigurationSection("dropmsg");
@@ -78,32 +78,32 @@ public class EntityDeath implements Listener {
 				if(!MyTokens._plugin.getConfig().getBoolean("modes.pvp")){
 					return;
 				}
-				if(MathHelper.ShouldDropOnKill()){
+				if(MathHelper.getInstance().ShouldDropOnKill()){
 					SQLhandler sql = MyTokens.sql;
 					if(MyTokens._plugin.getConfig().getBoolean("settings.pvp.enablethrottle")){
 						int allowed = MyTokens._plugin.getConfig().getInt("settings.pvp.killthrottle");
 						int timeout = MyTokens._plugin.getConfig().getInt("settings.pvp.timeout");
 						
-						int totalTimeOut = (timeout * 1000) + MathHelper.currentTimeMillis();
+						int totalTimeOut = (timeout * 1000) + MathHelper.getInstance().currentTimeMillis();
 						int kills = sql.GetKillCount(_player, killed);
 
 						int tmp = sql.GetTimeOut(_player, killed);
 						if(kills < allowed){
-							if(MathHelper.currentTimeMillis() < tmp || tmp == 0){
+							if(MathHelper.getInstance().currentTimeMillis() < tmp || tmp == 0){
 								kills = kills + 1;
 								sql.SetKillCount(_player, killed, kills, totalTimeOut);
 							}else{
 								sql.SetKillCount(_player, killed, 1, totalTimeOut);
 							}
 						}else{
-							if(MathHelper.currentTimeMillis() < tmp){
+							if(MathHelper.getInstance().currentTimeMillis() < tmp){
 								return;
 							}else{
 								sql.SetKillCount(_player, killed, 1, totalTimeOut);
 							}
 						}
 					}
-					int Drop = MathHelper.randInt(MyTokens.DropConfig.getConfig().getInt("Drop.kills.min"), MyTokens.DropConfig.getConfig().getInt("Drop.kills.max"));
+					int Drop = MathHelper.getInstance().randInt(MyTokens.DropConfig.getConfig().getInt("Drop.kills.min"), MyTokens.DropConfig.getConfig().getInt("Drop.kills.max"));
 					
 					ConfigurationSection dropitem = MyTokens._plugin.getConfig().getConfigurationSection("dropitem");
 					ConfigurationSection dropmsg = MyTokens._plugin.getConfig().getConfigurationSection("dropmsg");

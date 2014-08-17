@@ -60,8 +60,6 @@ public class TokenBlock {
     
     public int calculateDropAmount()
     {
-      /*Random r = new Random();
-      return this.min + r.nextInt(this.max - this.min);*/
-    	return MathHelper.randInt(this.min, this.max);
+    	return MathHelper.getInstance().randInt(this.min, this.max);
     }
 }

@@ -81,5 +81,4 @@ public class ConfigAccessor {
             this.plugin.saveResource(fileName, false);
         }
     }
- 
 }

@@ -1,20 +1,15 @@
 package com.toyz.MyTokens;
 
 import java.io.IOException;
-import java.lang.reflect.Field;
-import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Hashtable;
 import java.util.List;
-import java.util.UUID;
 import java.util.logging.Logger;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.command.ConsoleCommandSender;
-import org.bukkit.enchantments.Enchantment;
-import org.bukkit.enchantments.EnchantmentWrapper;
 import org.bukkit.inventory.*;
 
 import com.toyz.MyTokens.BaseCommand.BaseCommand;
@@ -22,7 +17,6 @@ import com.toyz.MyTokens.Events.*;
 import com.toyz.MyTokens.Tools.*;
 import com.toyz.MyTokens.Utils.ConfigAccessor;
 import com.toyz.MyTokens.Utils.MetricsLite;
-import com.toyz.MyTokens.sql.SQLHelper;
 import com.toyz.MyTokens.sql.SQLhandler;
 
 public class MyTokens extends JavaPlugin{
@@ -62,7 +56,7 @@ public class MyTokens extends JavaPlugin{
 		    }
 		 
 		//Load some Configs!
-		TokenShop = new ConfigAccessor(this, "Shop.yml");
+		TokenShop = new ConfigAccessor(this, "shop.yml");
 		DropConfig = new ConfigAccessor(this, "dropsettings.yml");
 		
 		//Save Defaults if needed
