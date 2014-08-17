@@ -19,6 +19,52 @@ public class EntityDeath implements Listener {
 	@EventHandler
 	public void onEntityDeath(EntityDeathEvent event) {
 		Entity killedE = event.getEntity();
+		if(!(killedE instanceof Player)){
+			if(killedE.getLastDamageCause() instanceof EntityDamageByEntityEvent){ //the dead thing was killed by an entity
+                EntityDamageByEntityEvent entityDamageByEntityEvent = (EntityDamageByEntityEvent) killedE.getLastDamageCause();
+                if(entityDamageByEntityEvent.getDamager() instanceof Player){ //the killer was a player
+                    Player _player = (Player)entityDamageByEntityEvent.getDamager();
+                    if(_player.getGameMode() == GameMode.CREATIVE){
+    					return;
+    				}
+    				
+    				if(!MyTokens._plugin.getConfig().getBoolean("modes.pve")){
+    					return;
+    				}
+    				if(MathHelper.ShouldDropOnKill()){
+    					SQLhandler sql = MyTokens.sql;
+    					int Drop = MathHelper.randInt(MyTokens.DropConfig.getConfig().getInt("Drop.kills.min"), MyTokens.DropConfig.getConfig().getInt("Drop.kills.max"));
+    					
+    					ConfigurationSection dropitem = MyTokens._plugin.getConfig().getConfigurationSection("dropitem");
+    					ConfigurationSection dropmsg = MyTokens._plugin.getConfig().getConfigurationSection("dropmsg");
+    					
+    					if(dropitem.getBoolean("drop")){
+    						List<String> msgs = new ArrayList<String>();
+    						
+    						for(String msg : dropitem.getStringList("item.lore")){
+    							String f = msg;
+    							f = MessageHelper.Format(_player, f, Drop + "");
+    							msgs.add(f);
+    						}
+    						
+    						ItemStack droppedItem = Item.CreateItem(dropitem.getString("item.id"), dropitem.getString("item.name") + "  [" + Drop + "]", msgs, 0, true);
+    						org.bukkit.entity.Item i = _player.getWorld().dropItem(_player.getLocation(), droppedItem);
+    						i.setPickupDelay(dropitem.getInt("item.delay"));
+    						_player.sendMessage(ChatColor.translateAlternateColorCodes('&', MyTokens._plugin.getConfig().getString("prefix")) + " " + MessageHelper.Format(_player, dropitem.getString("alert"), Drop + ""));
+    					}else if(dropmsg.getBoolean("say")){
+    						int Current = sql.GetBalance(_player);
+    						Current = Current + Drop;
+    						sql.SetBalance(_player, Current);
+    						for(String msg : dropmsg.getStringList("messages")){
+    							String f = msg;
+    							f = MessageHelper.Format(_player, f, Drop + "");
+    							_player.sendMessage(ChatColor.translateAlternateColorCodes('&', MyTokens._plugin.getConfig().getString("prefix")) + " " + f);
+    						}
+    					}
+    				}
+                }
+            }
+		}
 		if (killedE instanceof Player) {
 			Player killed = (Player) killedE;
 			//String dead = killed.getDisplayName();

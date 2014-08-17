@@ -28,7 +28,7 @@ settings:
   
 #Modes to drop Tokens
 modes:
-  #Player Vs Monster (WIP)
+  #Player Vs Monster
   pve: false
   #Player vs Player
   pvp: false
