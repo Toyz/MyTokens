@@ -32,8 +32,8 @@ public class SQLHelper {
 		}
 		 try {  
 	            stmt = getConn().createStatement();  
-	            stmt.execute("CREATE TABLE IF NOT EXISTS `" + MyTokens._plugin.getConfig().getString("database.prefix") + "Balance` (`player` VARCHAR(255) NOT NULL DEFAULT 'NULL', `username` VARCHAR(255) NULL DEFAULT NULL, `bal` INTEGER NULL DEFAULT NULL, PRIMARY KEY (`player`) );"); 
-	            stmt.execute("CREATE TABLE IF NOT EXISTS `" + MyTokens._plugin.getConfig().getString("database.prefix") + "Kills` ( `killer` VARCHAR(255) NULL DEFAULT NULL, `killer_name` VARCHAR(255) NULL DEFAULT NULL, `killed` VARCHAR(255) NULL DEFAULT NULL, `killed_name` VARCHAR(255) NULL DEFAULT NULL, `kcnt` INTEGER NULL DEFAULT NULL, `timeout` INTEGER NULL DEFAULT NULL, PRIMARY KEY (`killer`));");
+	            stmt.execute("CREATE TABLE IF NOT EXISTS `" + MyTokens.getAPI().getConfig().getString("database.prefix") + "Balance` (`player` VARCHAR(255) NOT NULL DEFAULT 'NULL', `username` VARCHAR(255) NULL DEFAULT NULL, `bal` INTEGER NULL DEFAULT NULL, PRIMARY KEY (`player`) );"); 
+	            stmt.execute("CREATE TABLE IF NOT EXISTS `" + MyTokens.getAPI().getConfig().getString("database.prefix") + "Kills` ( `killer` VARCHAR(255) NULL DEFAULT NULL, `killer_name` VARCHAR(255) NULL DEFAULT NULL, `killed` VARCHAR(255) NULL DEFAULT NULL, `killed_name` VARCHAR(255) NULL DEFAULT NULL, `kcnt` INTEGER NULL DEFAULT NULL, `timeout` INTEGER NULL DEFAULT NULL, PRIMARY KEY (`killer`));");
 	            if(cs.getBoolean("sqlite.use")){
 	            	stmt.execute("pragma journal_mode=wal");
 	            }
@@ -57,7 +57,6 @@ public class SQLHelper {
 								"jdbc:sqlite:" + _plugin.getDataFolder() + File.separatorChar + 
 								((cs.getString("sqlite.file") != null) ? cs.getString("sqlite.file") : "mytokens.db"));
 					} catch (ClassNotFoundException | SQLException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 					
@@ -73,7 +72,6 @@ public class SQLHelper {
 								((cs.getString("mysql.user") != null) ? cs.getString("mysql.user") : "root"),
 								((cs.getString("mysql.password") != null) ? cs.getString("mysql.password") : ""));
 					} catch (ClassNotFoundException | SQLException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 				}
 				

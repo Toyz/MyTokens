@@ -29,7 +29,7 @@ public class SQLhandler {
 		//_sql = null;
 		ResultSet rs = null;
 		try {
-			String sql = "SELECT bal from " + MyTokens._plugin.getConfig().getString("database.prefix") + "Balance where player = ?";
+			String sql = "SELECT bal from " + MyTokens.getAPI().getConfig().getString("database.prefix") + "Balance where player = ?";
 			PreparedStatement statement = GetSQL().preparedStatement(sql);
 			statement.setString(1, player.getUniqueId().toString());
 			rs = statement.executeQuery();
@@ -47,7 +47,7 @@ public class SQLhandler {
 	
 	public void SetBalance(Player player, int balance){
 		//_sql = null;
-		String sql = "REPLACE INTO " + MyTokens._plugin.getConfig().getString("database.prefix") + "Balance (player, username, bal) VALUES(?, ?, ?)";
+		String sql = "REPLACE INTO " + MyTokens.getAPI().getConfig().getString("database.prefix") + "Balance (player, username, bal) VALUES(?, ?, ?)";
 		try{
 			PreparedStatement statement = GetSQL().preparedStatement(sql);
 			statement.setString(1, player.getUniqueId().toString());
@@ -64,7 +64,7 @@ public class SQLhandler {
 	public int GetKillCount(Player killer, Player killed){
 		//_sql = null;
 		ResultSet rs = null;
-		String sql = "SELECT kcnt from " + MyTokens._plugin.getConfig().getString("database.prefix") + "Kills where killer = ? and killed = ? limit 1";
+		String sql = "SELECT kcnt from " + MyTokens.getAPI().getConfig().getString("database.prefix") + "Kills where killer = ? and killed = ? limit 1";
 		try{
 			PreparedStatement statement = GetSQL().preparedStatement(sql);
 			statement.setString(1, killer.getUniqueId().toString());
@@ -88,7 +88,7 @@ public class SQLhandler {
 	
 	public void SetKillCount(Player killer, Player killed, int count, int timeout){
 		//_sql = null;
-		String sql = "REPLACE INTO " + MyTokens._plugin.getConfig().getString("database.prefix") + "Kills (killer, killer_name, killed, killed_name, kcnt, timeout) VALUES(?, ?, ?, ?, ?, ?)";
+		String sql = "REPLACE INTO " + MyTokens.getAPI().getConfig().getString("database.prefix") + "Kills (killer, killer_name, killed, killed_name, kcnt, timeout) VALUES(?, ?, ?, ?, ?, ?)";
 		try{
 			PreparedStatement statement = GetSQL().preparedStatement(sql);
 			statement.setString(1, killer.getUniqueId().toString());
@@ -106,7 +106,7 @@ public class SQLhandler {
 	public int GetTimeOut(Player killer, Player killed){
 		//_sql = null;
 		ResultSet rs = null;
-		String sql = "SELECT kcnt from " + MyTokens._plugin.getConfig().getString("database.prefix") + "Kills where killer = ? and killed = ? limit 1";
+		String sql = "SELECT kcnt from " + MyTokens.getAPI().getConfig().getString("database.prefix") + "Kills where killer = ? and killed = ? limit 1";
 		try{
 			PreparedStatement statement = GetSQL().preparedStatement(sql);
 			statement.setString(1, killer.getUniqueId().toString());

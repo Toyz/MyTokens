@@ -7,13 +7,11 @@ import org.bukkit.entity.Player;
 import com.toyz.MyTokens.MyTokens;
 import com.toyz.MyTokens.BaseCommand.BaseCommand;
 import com.toyz.MyTokens.BaseCommand.Handler.IssueCommands;
-import com.toyz.MyTokens.Tools.*;
-import com.toyz.MyTokens.Utils.MessageHelper;
 import com.toyz.MyTokens.sql.SQLhandler;
-public class MyTokensAdmin extends BaseCommand{
+
+public class MyTokensAdmin extends BaseCommand {
 	private static IssueCommands _cmd = null;
 	private static String _Permission = "mytokens.admin";
-	private static int _minArgs = 0;
 	private static String _invaidUsage = "Invalid Args - usage:";
 	
 	public static Boolean Fire(IssueCommands info){
@@ -35,8 +33,8 @@ public class MyTokensAdmin extends BaseCommand{
 	
 	private static void Trigger(){
 		if((_cmd.getArgs().length <= 0 || _cmd.getArg(0).equalsIgnoreCase("?") || _cmd.getArg(0).equalsIgnoreCase("help"))){
-			for(String msg : MyTokens.AdminHelpCommands){
-				sendMessage(MessageHelper.Format(null, msg));
+			for(String msg : MyTokens.HELP_COMMANDS_ADMIN){
+				sendMessage(MyTokens.getAPI().getMessageHelper().format(null, msg));
 			}
 			return;
 		}
@@ -44,7 +42,7 @@ public class MyTokensAdmin extends BaseCommand{
 			if(_cmd.isPlayer()){
 				if(!_cmd.getPlayer().hasPermission(_Permission + ".userbal")){
 					if(!_cmd.getPlayer().isOp()){
-						sendMessage("You do not have permission to run this command");
+						sendMessage("You do not have permission to run this command.");
 						return;
 					}
 				}
@@ -54,9 +52,10 @@ public class MyTokensAdmin extends BaseCommand{
 				Player toGet = Bukkit.getPlayer(_cmd.getArg(1));
 				
 				if(toGet != null)
-					sendMessage(ChatColor.BLUE + toGet.getName() + " (Nick: " + toGet.getDisplayName()+ ") " + ChatColor.WHITE + "has " + MyTokens.sql.GetBalance(toGet) + " Tokens.");
+					sendMessage(ChatColor.BLUE + toGet.getName() + " (Nick: " + toGet.getDisplayName()+ ") "
+							+ ChatColor.WHITE + "has " + MyTokens.getAPI().getSqlHandler().GetBalance(toGet) + " Tokens.");
 				else{
-					sendMessage(MessageHelper.Format(null, "&4Player is currently offline"));
+					sendMessage(MyTokens.getAPI().getMessageHelper().format(null, "&4Player is currently offline"));
 				}
 			}else{
 				sendMessage(_invaidUsage + " /mytokens bal user");
@@ -73,7 +72,7 @@ public class MyTokensAdmin extends BaseCommand{
 				}
 			}
 			sendMessage("Reloading MyTokens Config");
-			MyTokens._plugin.Reload();
+			MyTokens.getAPI().reload();
 			sendMessage("MyTokens Config reloaded");
 		}
 		
@@ -89,7 +88,7 @@ public class MyTokensAdmin extends BaseCommand{
 				if(_cmd.getArgs().length >= 3){
 					Player givee = Bukkit.getPlayer(_cmd.getArg(1));
 					if(givee != null){
-						SQLhandler sql = MyTokens.sql;
+						SQLhandler sql = MyTokens.getAPI().getSqlHandler();
 						int Giving = 0;
 						try{
 							Giving = Integer.valueOf(_cmd.getArg(2)).intValue();
@@ -99,7 +98,7 @@ public class MyTokensAdmin extends BaseCommand{
 						}
 						
 						if(Giving <= 0){
-							sendMessage(MessageHelper.Format(null, "&4You must send more then 0 tokens!"));
+							sendMessage(MyTokens.getAPI().getMessageHelper().format(null, "&4You must send more then 0 tokens!"));
 							return;
 						}
 						
@@ -109,9 +108,9 @@ public class MyTokensAdmin extends BaseCommand{
 						//System.out.println(givee.getUniqueId().toString() + " = " + givee.getName() + " - Giving: " + Giving + " - Total: " + Current + "");
 						//MyTokens.UserTokens.getConfig().set(givee.getUniqueId().toString(), Current);
 						sql.SetBalance(givee, Current);
-						givee.sendMessage(MessageHelper.Format(null, "You were given %amount tokens!", Giving + ""));
+						givee.sendMessage(MyTokens.getAPI().getMessageHelper().format(null, "You were given %amount tokens!", Giving + ""));
 					}else{
-						sendMessage(MessageHelper.Format(null, "&4Player is currently offline"));
+						sendMessage(MyTokens.getAPI().getMessageHelper().format(null, "&4Player is currently offline"));
 					}
 				}else{
 					sendMessage(_invaidUsage + " /mytokens give user amount");
@@ -129,7 +128,7 @@ public class MyTokensAdmin extends BaseCommand{
 				if(_cmd.getArgs().length >= 3){
 					Player givee = Bukkit.getPlayer(_cmd.getArg(1));
 					if(givee != null){
-						SQLhandler sql = MyTokens.sql;
+						SQLhandler sql = MyTokens.getAPI().getSqlHandler();
 						int Giving = 0;
 						try{
 							Giving = Integer.valueOf(_cmd.getArg(2)).intValue();
@@ -139,7 +138,7 @@ public class MyTokensAdmin extends BaseCommand{
 						}
 						
 						if(Giving <= 0){
-							sendMessage(MessageHelper.Format(null, "&4You must send more then 0 tokens!"));
+							sendMessage(MyTokens.getAPI().getMessageHelper().format(null, "&4You must send more then 0 tokens!"));
 							return;
 						}
 						
@@ -152,9 +151,9 @@ public class MyTokensAdmin extends BaseCommand{
 						//System.out.println(givee.getUniqueId().toString() + " = " + givee.getName() + " - Giving: " + Giving + " - Total: " + Current + "");
 						//MyTokens.UserTokens.getConfig().set(givee.getUniqueId().toString(), Current);
 						sql.SetBalance(givee, Current);
-						givee.sendMessage(MessageHelper.Format(null, "You had %amount tokens taken from you!", Giving + ""));
+						givee.sendMessage(MyTokens.getAPI().getMessageHelper().format(null, "You had %amount tokens taken from you!", Giving + ""));
 					}else{
-						sendMessage(MessageHelper.Format(null, "&4Player is currently offline"));
+						sendMessage(MyTokens.getAPI().getMessageHelper().format(null, "&4Player is currently offline"));
 					}
 				}else{
 					sendMessage(_invaidUsage + " /mytokens give user amount");
@@ -170,12 +169,12 @@ public class MyTokensAdmin extends BaseCommand{
 				}
 			}
 				if(_cmd.getArgs().length >= 2){
-					SQLhandler sql = MyTokens.sql;
+					SQLhandler sql = MyTokens.getAPI().getSqlHandler();
 					Player givee = Bukkit.getPlayer(_cmd.getArg(1));
 					
 					//MyTokens.UserTokens.getConfig().set(givee.getUniqueId().toString(), 0); 
 					sql.SetBalance(givee, 0);
-					givee.sendMessage(MessageHelper.Format(null, "Your Tokens have been reset to 0"));
+					givee.sendMessage(MyTokens.getAPI().getMessageHelper().format(null, "Your Tokens have been reset to 0"));
 				}
 		}
 	}

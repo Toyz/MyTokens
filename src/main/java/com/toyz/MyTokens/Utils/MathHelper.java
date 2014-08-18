@@ -7,16 +7,10 @@ import org.bukkit.Material;
 import com.toyz.MyTokens.MyTokens;
 
 public class MathHelper {
-	private static MathHelper instance = new MathHelper();
 	private static Random random = new Random();
 
-	/** Gets the singleton instance **/
-	public static MathHelper getInstance() {
-		return instance;
-	}
-
 	public boolean ShouldDropOnKill() {
-		return random.nextDouble() <= MyTokens.DropConfig.getConfig().getDouble("Drop.kills.percent");
+		return random.nextDouble() <= MyTokens.getAPI().getDropConfig().getConfig().getDouble("Drop.kills.percent");
 	}
 
 	public int randInt(int min, int max) {

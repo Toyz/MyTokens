@@ -26,10 +26,10 @@ public class BaseCommand implements CommandExecutor {
 	
 	protected static void sendMessage(String Message){
 		if(Info.isPlayer()){
-			Info.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', MyTokens._plugin.getConfig().getString("prefix")) + " " + Message);
+			Info.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', MyTokens.getAPI().getConfig().getString("prefix")) + " " + Message);
 		}
 		if(Info.isConsole()){
-			Info.getConsole().sendMessage(ChatColor.translateAlternateColorCodes('&', MyTokens._plugin.getConfig().getString("prefix")) + " " + Message);
+			Info.getConsole().sendMessage(ChatColor.translateAlternateColorCodes('&', MyTokens.getAPI().getConfig().getString("prefix")) + " " + Message);
 		}
 	}
 }

@@ -21,7 +21,7 @@ public class Inventory {
 		_player = p;
 		_items = items;
 		
-		_size = MyTokens._plugin.getConfig().getInt("settings.shop.rows");
+		_size = MyTokens.getAPI().getConfig().getInt("settings.shop.rows");
 		if(useRow)
 			_rowLength = _size * 9;
 		_Inventory = Bukkit.createInventory(null, _rowLength, title);
@@ -46,7 +46,7 @@ public class Inventory {
 			//MyTokens.console.sendMessage(MessageHelper.Format(null, "&Loaded item @ index " + entry.getKey()));
 		}
 		if(ShowTokenBal){
-			ConfigurationSection cs = MyTokens._plugin.getConfig().getConfigurationSection("infoitem");
+			ConfigurationSection cs = MyTokens.getAPI().getConfig().getConfigurationSection("infoitem");
 			Item.player = _player;
 			ItemStack lastItem = Item.CreateItem(cs.getString("id"), cs.getString("name"), cs.getStringList("lore"), 0, cs.getBoolean("glow"));
 			_Inventory.setItem((_rowLength - 1), lastItem);

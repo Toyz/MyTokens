@@ -1,15 +1,18 @@
 package com.toyz.MyTokens.Tools;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.List;
 
-import org.bukkit.*;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import com.toyz.MyTokens.MyTokens;
-import com.toyz.MyTokens.Utils.*;
+import com.toyz.MyTokens.Utils.NMSUtils;
 
 public class Item {
 	private Hashtable<Integer, ItemStack> items = null;
@@ -20,14 +23,14 @@ public class Item {
 	}
 	
 	public Hashtable<Integer, ItemStack> BuildItems(){
-		ConfigurationSection cs = MyTokens.TokenShop.getConfig().getConfigurationSection("Shop");
+		ConfigurationSection cs = MyTokens.getAPI().getTokenShop().getConfig().getConfigurationSection("Shop");
 		
 		for (String key : cs.getKeys(false)){
 			int place = 0;
 			try{
 				place = Integer.valueOf(key).intValue() - 1;
 			}catch (Exception e){
-				MyTokens.logger.warning("Failed to create item with ID of " + cs.getString(key + ".id") + " @ place " + key);
+				MyTokens.getAPI().getLogger().warning("Failed to create item with ID of " + cs.getString(key + ".id") + " @ place " + key);
 			}
 			ItemStack item = CreateItem(cs.getString(key + ".id"), 
 					cs.getString(key + ".name"),
@@ -47,7 +50,7 @@ public class Item {
 		try{
 			mit = Integer.valueOf(data[0]).intValue();
 		}catch (Exception e){
-			MyTokens.logger.warning("Failed to create item with ID of " + id);
+			MyTokens.getAPI().getLogger().warning("Failed to create item with ID of " + id);
 			return null;
 		}
 		ItemStack is = new ItemStack(Material.getMaterial(mit));
@@ -65,7 +68,7 @@ public class Item {
 		if(lore != null){
 			List<String> Lores = new ArrayList<String>();
 			for(String l : lore){
-				Lores.add(MessageHelper.Format(player, l));
+				Lores.add(MyTokens.getAPI().getMessageHelper().format(player, l));
 			}
 			im.setLore(Lores);
 		}

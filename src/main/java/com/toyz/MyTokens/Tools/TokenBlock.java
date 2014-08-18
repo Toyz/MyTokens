@@ -4,7 +4,7 @@ import java.util.Random;
 
 import org.bukkit.Material;
 
-import com.toyz.MyTokens.Utils.MathHelper;
+import com.toyz.MyTokens.MyTokens;
 
 public class TokenBlock {
 	private Material type;
@@ -60,6 +60,6 @@ public class TokenBlock {
     
     public int calculateDropAmount()
     {
-    	return MathHelper.getInstance().randInt(this.min, this.max);
+    	return MyTokens.getAPI().getMathHelper().randInt(this.min, this.max);
     }
 }

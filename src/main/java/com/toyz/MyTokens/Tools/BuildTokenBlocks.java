@@ -16,14 +16,14 @@ public class BuildTokenBlocks {
 	public static List<TokenBlock> BlocksThatDrop(){
 		List<TokenBlock> _blocks = new ArrayList<TokenBlock>();
 		
-		ConfigurationSection cs = MyTokens.DropConfig.getConfig().getConfigurationSection("Drop.break.blocks");
+		ConfigurationSection cs = MyTokens.getAPI().getDropConfig().getConfig().getConfigurationSection("Drop.break.blocks");
 		
 		for (String key : cs.getKeys(false)){
 			int id = 0;
 			try{
 				id = Integer.valueOf(key).intValue();
 			}catch (Exception e){
-				MyTokens.logger.warning("Failed to block item with ID of " + id);
+				MyTokens.getAPI().getLogger().warning("Failed to block item with ID of " + id);
 				continue;
 			}
 			if(id > 0){
@@ -32,7 +32,7 @@ public class BuildTokenBlocks {
 						cs.getInt(key + ".min"),
 						cs.getInt(key + ".max"),
 						cs.getBoolean(key + ".enabled"));
-				MyTokens.console.sendMessage(ChatColor.GREEN + "[Loaded]" +ChatColor.WHITE + " Block " + block.getType().toString() +" with drop rate of " + cs.getDouble(key + ".percent"));
+				MyTokens.getAPI().getConsole().sendMessage(ChatColor.GREEN + "[Loaded]" +ChatColor.WHITE + " Block " + block.getType().toString() +" with drop rate of " + cs.getDouble(key + ".percent"));
 				_blocks.add(block);
 			}
 		}
@@ -43,7 +43,7 @@ public class BuildTokenBlocks {
 	public static Hashtable<Integer, ItemStack> BuildBreakAbleList(){
 		Hashtable<Integer, ItemStack> items = new Hashtable<Integer, ItemStack>();
 		int id = 0;
-		for(TokenBlock block : MyTokens.DropBlocks){
+		for(TokenBlock block : MyTokens.getAPI().getDropBlocks()){
 			DecimalFormat df = new DecimalFormat("#%");
 			
 			List<String> lore = Arrays.asList(

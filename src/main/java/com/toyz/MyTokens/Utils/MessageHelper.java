@@ -11,10 +11,10 @@ import com.toyz.MyTokens.sql.SQLhandler;
 public class MessageHelper {
 	private static Hashtable<String, String> _replace = null;
 	
-	public static String Format(Player player, String msg){
+	public String format(Player player, String msg){
 		//Make Hash and build list
 		_replace = new Hashtable<String, String>();
-		BuildReplaceTable(player);
+		buildReplaceTable(player);
 		
 		//Fix string
 		Enumeration<String> e = _replace.keys();
@@ -30,19 +30,19 @@ public class MessageHelper {
 		return msg;
 	}
 	
-	private static void BuildReplaceTable(Player _player){
+	private void buildReplaceTable(Player _player){
 		if(_player != null){
-			SQLhandler sql = MyTokens.sql;
+			SQLhandler sql = MyTokens.getAPI().getSqlHandler();
 			_replace.put("%player", _player.getName());
 			_replace.put("%total", sql.GetBalance(_player) + "");
 		}
 		_replace.put("%amount", "0");
 	}
 	
-	public static String Format(Player player, String msg, String Dropped){
+	public String format(Player player, String msg, String Dropped){
 		//Make Hash and build list
 		_replace = new Hashtable<String, String>();
-		BuildReplaceTable(player, Dropped);
+		buildReplaceTable(player, Dropped);
 		
 		//Fix string
 		Enumeration<String> e = _replace.keys();
@@ -58,9 +58,9 @@ public class MessageHelper {
 		return msg;
 	}
 	
-	private static void BuildReplaceTable(Player _player, String dropped){
+	private void buildReplaceTable(Player _player, String dropped){
 		if(_player != null){
-			SQLhandler sql = MyTokens.sql;
+			SQLhandler sql = MyTokens.getAPI().getSqlHandler();
 			_replace.put("%player", _player.getName());
 			_replace.put("%total", sql.GetBalance(_player) + "");
 		}

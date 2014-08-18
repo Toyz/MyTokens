@@ -534,7 +534,7 @@ public class NMSUtils {
             Object bukkitData = createNode(stack, "bukkit");
             class_NBTTagCompound_setBooleanMethod.invoke(bukkitData, "glow", true);
         } catch (Throwable ex) {
-
+        		ex.printStackTrace();
         }
     }
 

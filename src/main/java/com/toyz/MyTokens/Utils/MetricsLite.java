@@ -499,5 +499,4 @@ public class MetricsLite {
     private static String urlEncode(final String text) throws UnsupportedEncodingException {
         return URLEncoder.encode(text, "UTF-8");
     }
-
 }

@@ -22,15 +22,15 @@ public class InventoryClick  implements Listener {
 	@SuppressWarnings("deprecation")
 	@EventHandler
 	 public void onInventoryClick(InventoryClickEvent e){
-		 String title = ChatColor.translateAlternateColorCodes('&', MyTokens._plugin.getConfig().getString("title"));
+		 String title = ChatColor.translateAlternateColorCodes('&', MyTokens.getAPI().getConfig().getString("title"));
 		 if((e.getInventory().getTitle() != null) && (e.getInventory().getTitle().equalsIgnoreCase("Breakable Blocks"))){
 			e.setCancelled(true);
 			if(((Player)e.getWhoClicked()).hasPermission("mytokens.admin.enableblocks") || ((Player)e.getWhoClicked()).isOp()){
-				ConfigurationSection cs = MyTokens.DropConfig.getConfig().getConfigurationSection("Drop.break.blocks");
+				ConfigurationSection cs = MyTokens.getAPI().getDropConfig().getConfig().getConfigurationSection("Drop.break.blocks");
 
 				if(e.getRawSlot() == 53){
-					MyTokens.DropConfig.saveConfig();
-					((Player)e.getWhoClicked()).sendMessage(ChatColor.translateAlternateColorCodes('&', MyTokens._plugin.getConfig().getString("prefix")) + " Shops.yml has been updated");
+					MyTokens.getAPI().getDropConfig().saveConfig();
+					((Player)e.getWhoClicked()).sendMessage(ChatColor.translateAlternateColorCodes('&', MyTokens.getAPI().getConfig().getString("prefix")) + " Shops.yml has been updated");
 					return;
 				}	
 				
@@ -39,7 +39,7 @@ public class InventoryClick  implements Listener {
 					 return;
 				 }
 				
-				TokenBlock tb = MyTokens.DropBlocks.get(e.getRawSlot());
+				TokenBlock tb = MyTokens.getAPI().getDropBlocks().get(e.getRawSlot());
 				
 				if(e.getCurrentItem().getType() == Material.REDSTONE_BLOCK)
 					tb.SetEnabled(true);
@@ -47,10 +47,10 @@ public class InventoryClick  implements Listener {
 					tb.SetEnabled(false);
 				
 				cs.set(tb.getType().getId() + ".enabled", tb.enabled());
-				MyTokens.BreakAbleItems = BuildTokenBlocks.BuildBreakAbleList();
+				MyTokens.getAPI().setBreakableItems(BuildTokenBlocks.BuildBreakAbleList());
 				
 				int id = 0;
-				for(TokenBlock block: MyTokens.DropBlocks){
+				for(TokenBlock block: MyTokens.getAPI().getDropBlocks()){
 					DecimalFormat df = new DecimalFormat("#%");
 					
 					List<String> lore = Arrays.asList(
@@ -81,11 +81,11 @@ public class InventoryClick  implements Listener {
 				 return;
 			 }
 			 int index = e.getRawSlot() + 1;
-			 int _size = MyTokens._plugin.getConfig().getInt("settings.shop.rows");
+			 int _size = MyTokens.getAPI().getConfig().getInt("settings.shop.rows");
 			 int _rowLength = _size * 9;
 			 if(index < _rowLength){
-				 SQLhandler sql = MyTokens.sql;
-				 ConfigurationSection cs = MyTokens.TokenShop.getConfig().getConfigurationSection("Shop." + index);
+				 SQLhandler sql = MyTokens.getAPI().getSqlHandler();
+				 ConfigurationSection cs = MyTokens.getAPI().getTokenShop().getConfig().getConfigurationSection("Shop." + index);
 				 
 				 int Tokens = sql.GetBalance((Player)e.getWhoClicked());
 				 if(Tokens >= cs.getInt("cost") || ((Player)e.getWhoClicked()).hasPermission("mytokens.admin.nopay") ||((Player)e.getWhoClicked()).isOp()){
@@ -107,11 +107,11 @@ public class InventoryClick  implements Listener {
 					 
 					 //Update Last Object
 					 ItemStack i = e.getInventory().getItem(_rowLength - 1);
-					 ConfigurationSection cs1 = MyTokens._plugin.getConfig().getConfigurationSection("infoitem");
+					 ConfigurationSection cs1 = MyTokens.getAPI().getConfig().getConfigurationSection("infoitem");
 					 ItemMeta l = i.getItemMeta();
 					 List<String> lore = new ArrayList<String>();
 					 for(String msg : cs1.getStringList("lore")){
-						 msg = MessageHelper.Format(((Player)e.getWhoClicked()), msg);
+						 msg = MyTokens.getAPI().getMessageHelper().format(((Player)e.getWhoClicked()), msg);
 						 lore.add(msg);
 					 }
 					 l.setLore(lore);

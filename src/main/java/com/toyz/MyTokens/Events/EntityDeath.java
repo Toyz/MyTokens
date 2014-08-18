@@ -12,7 +12,6 @@ import org.bukkit.inventory.ItemStack;
 
 import com.toyz.MyTokens.MyTokens;
 import com.toyz.MyTokens.Tools.Item;
-import com.toyz.MyTokens.Utils.*;
 import com.toyz.MyTokens.sql.SQLhandler;
 
 public class EntityDeath implements Listener {
@@ -28,37 +27,37 @@ public class EntityDeath implements Listener {
     					return;
     				}
     				
-    				if(!MyTokens._plugin.getConfig().getBoolean("modes.pve")){
+    				if(!MyTokens.getAPI().getConfig().getBoolean("modes.pve")){
     					return;
     				}
-    				if(MathHelper.getInstance().ShouldDropOnKill()){
-    					SQLhandler sql = MyTokens.sql;
-    					int Drop = MathHelper.getInstance().randInt(MyTokens.DropConfig.getConfig().getInt("Drop.kills.min"), MyTokens.DropConfig.getConfig().getInt("Drop.kills.max"));
+    				if(MyTokens.getAPI().getMathHelper().ShouldDropOnKill()){
+    					SQLhandler sql = MyTokens.getAPI().getSqlHandler();
+    					int Drop = MyTokens.getAPI().getMathHelper().randInt(MyTokens.getAPI().getDropConfig().getConfig().getInt("Drop.kills.min"), MyTokens.getAPI().getDropConfig().getConfig().getInt("Drop.kills.max"));
     					
-    					ConfigurationSection dropitem = MyTokens._plugin.getConfig().getConfigurationSection("dropitem");
-    					ConfigurationSection dropmsg = MyTokens._plugin.getConfig().getConfigurationSection("dropmsg");
+    					ConfigurationSection dropitem = MyTokens.getAPI().getConfig().getConfigurationSection("dropitem");
+    					ConfigurationSection dropmsg = MyTokens.getAPI().getConfig().getConfigurationSection("dropmsg");
     					
     					if(dropitem.getBoolean("drop")){
     						List<String> msgs = new ArrayList<String>();
     						
     						for(String msg : dropitem.getStringList("item.lore")){
     							String f = msg;
-    							f = MessageHelper.Format(_player, f, Drop + "");
+    							f = MyTokens.getAPI().getMessageHelper().format(_player, f, Drop + "");
     							msgs.add(f);
     						}
     						
     						ItemStack droppedItem = Item.CreateItem(dropitem.getString("item.id"), dropitem.getString("item.name") + "  [" + Drop + "]", msgs, 0, true);
     						org.bukkit.entity.Item i = _player.getWorld().dropItem(_player.getLocation(), droppedItem);
     						i.setPickupDelay(dropitem.getInt("item.delay"));
-    						_player.sendMessage(ChatColor.translateAlternateColorCodes('&', MyTokens._plugin.getConfig().getString("prefix")) + " " + MessageHelper.Format(_player, dropitem.getString("alert"), Drop + ""));
+    						_player.sendMessage(ChatColor.translateAlternateColorCodes('&', MyTokens.getAPI().getConfig().getString("prefix")) + " " + MyTokens.getAPI().getMessageHelper().format(_player, dropitem.getString("alert"), Drop + ""));
     					}else if(dropmsg.getBoolean("say")){
     						int Current = sql.GetBalance(_player);
     						Current = Current + Drop;
     						sql.SetBalance(_player, Current);
     						for(String msg : dropmsg.getStringList("messages")){
     							String f = msg;
-    							f = MessageHelper.Format(_player, f, Drop + "");
-    							_player.sendMessage(ChatColor.translateAlternateColorCodes('&', MyTokens._plugin.getConfig().getString("prefix")) + " " + f);
+    							f = MyTokens.getAPI().getMessageHelper().format(_player, f, Drop + "");
+    							_player.sendMessage(ChatColor.translateAlternateColorCodes('&', MyTokens.getAPI().getConfig().getString("prefix")) + " " + f);
     						}
     					}
     				}
@@ -75,60 +74,60 @@ public class EntityDeath implements Listener {
 					return;
 				}
 				
-				if(!MyTokens._plugin.getConfig().getBoolean("modes.pvp")){
+				if(!MyTokens.getAPI().getConfig().getBoolean("modes.pvp")){
 					return;
 				}
-				if(MathHelper.getInstance().ShouldDropOnKill()){
-					SQLhandler sql = MyTokens.sql;
-					if(MyTokens._plugin.getConfig().getBoolean("settings.pvp.enablethrottle")){
-						int allowed = MyTokens._plugin.getConfig().getInt("settings.pvp.killthrottle");
-						int timeout = MyTokens._plugin.getConfig().getInt("settings.pvp.timeout");
+				if(MyTokens.getAPI().getMathHelper().ShouldDropOnKill()){
+					SQLhandler sql = MyTokens.getAPI().getSqlHandler();
+					if(MyTokens.getAPI().getConfig().getBoolean("settings.pvp.enablethrottle")){
+						int allowed = MyTokens.getAPI().getConfig().getInt("settings.pvp.killthrottle");
+						int timeout = MyTokens.getAPI().getConfig().getInt("settings.pvp.timeout");
 						
-						int totalTimeOut = (timeout * 1000) + MathHelper.getInstance().currentTimeMillis();
+						int totalTimeOut = (timeout * 1000) + MyTokens.getAPI().getMathHelper().currentTimeMillis();
 						int kills = sql.GetKillCount(_player, killed);
 
 						int tmp = sql.GetTimeOut(_player, killed);
 						if(kills < allowed){
-							if(MathHelper.getInstance().currentTimeMillis() < tmp || tmp == 0){
+							if(MyTokens.getAPI().getMathHelper().currentTimeMillis() < tmp || tmp == 0){
 								kills = kills + 1;
 								sql.SetKillCount(_player, killed, kills, totalTimeOut);
 							}else{
 								sql.SetKillCount(_player, killed, 1, totalTimeOut);
 							}
 						}else{
-							if(MathHelper.getInstance().currentTimeMillis() < tmp){
+							if(MyTokens.getAPI().getMathHelper().currentTimeMillis() < tmp){
 								return;
 							}else{
 								sql.SetKillCount(_player, killed, 1, totalTimeOut);
 							}
 						}
 					}
-					int Drop = MathHelper.getInstance().randInt(MyTokens.DropConfig.getConfig().getInt("Drop.kills.min"), MyTokens.DropConfig.getConfig().getInt("Drop.kills.max"));
+					int Drop = MyTokens.getAPI().getMathHelper().randInt(MyTokens.getAPI().getDropConfig().getConfig().getInt("Drop.kills.min"), MyTokens.getAPI().getDropConfig().getConfig().getInt("Drop.kills.max"));
 					
-					ConfigurationSection dropitem = MyTokens._plugin.getConfig().getConfigurationSection("dropitem");
-					ConfigurationSection dropmsg = MyTokens._plugin.getConfig().getConfigurationSection("dropmsg");
+					ConfigurationSection dropitem = MyTokens.getAPI().getConfig().getConfigurationSection("dropitem");
+					ConfigurationSection dropmsg = MyTokens.getAPI().getConfig().getConfigurationSection("dropmsg");
 					
 					if(dropitem.getBoolean("drop")){
 						List<String> msgs = new ArrayList<String>();
 						
 						for(String msg : dropitem.getStringList("item.lore")){
 							String f = msg;
-							f = MessageHelper.Format(_player, f, Drop + "");
+							f = MyTokens.getAPI().getMessageHelper().format(_player, f, Drop + "");
 							msgs.add(f);
 						}
 						
 						ItemStack droppedItem = Item.CreateItem(dropitem.getString("item.id"), dropitem.getString("item.name") + "  [" + Drop + "]", msgs, 0, true);
 						org.bukkit.entity.Item i = _player.getWorld().dropItem(_player.getLocation(), droppedItem);
 						i.setPickupDelay(dropitem.getInt("item.delay"));
-						_player.sendMessage(ChatColor.translateAlternateColorCodes('&', MyTokens._plugin.getConfig().getString("prefix")) + " " + MessageHelper.Format(_player, dropitem.getString("alert"), Drop + ""));
+						_player.sendMessage(ChatColor.translateAlternateColorCodes('&', MyTokens.getAPI().getConfig().getString("prefix")) + " " + MyTokens.getAPI().getMessageHelper().format(_player, dropitem.getString("alert"), Drop + ""));
 					}else if(dropmsg.getBoolean("say")){
 						int Current = sql.GetBalance(_player);
 						Current = Current + Drop;
 						sql.SetBalance(_player, Current);
 						for(String msg : dropmsg.getStringList("messages")){
 							String f = msg;
-							f = MessageHelper.Format(_player, f, Drop + "");
-							_player.sendMessage(ChatColor.translateAlternateColorCodes('&', MyTokens._plugin.getConfig().getString("prefix")) + " " + f);
+							f = MyTokens.getAPI().getMessageHelper().format(_player, f, Drop + "");
+							_player.sendMessage(ChatColor.translateAlternateColorCodes('&', MyTokens.getAPI().getConfig().getString("prefix")) + " " + f);
 						}
 					}
 					//Current = GetAmount + Current;

@@ -29,12 +29,12 @@ public class MYT extends BaseCommand{
 		if(_cmd.getArgs().length <= _minArgs){
 			if(!_cmd.getPlayer().hasPermission(_Permission + ".open")){
 				if(!_cmd.getPlayer().isOp()){
-					sendMessage(MessageHelper.Format(_cmd.getPlayer(), "&4You do not have permission to use this command"));
+					sendMessage(MyTokens.getAPI().getMessageHelper().format(_cmd.getPlayer(), "&4You do not have permission to use this command"));
 					return;
 				}
 			}
 			Inventory invy = new Inventory(_cmd.getPlayer(),
-					MyTokens.Items, true, ChatColor.translateAlternateColorCodes('&', MyTokens._plugin.getConfig().getString("title"))
+					MyTokens.getAPI().getItems(), true, ChatColor.translateAlternateColorCodes('&', MyTokens.getAPI().getConfig().getString("title"))
 					, true);
 			invy.Open();
 			return;
@@ -42,22 +42,22 @@ public class MYT extends BaseCommand{
 		if(_cmd.getArg(0).equalsIgnoreCase("?") || _cmd.getArg(0).equalsIgnoreCase("help")){
 			if(!_cmd.getPlayer().hasPermission(_Permission + ".help")){
 				if(!_cmd.getPlayer().isOp()){
-					sendMessage(MessageHelper.Format(_cmd.getPlayer(), "&4You do not have permission to use this command"));
+					sendMessage(MyTokens.getAPI().getMessageHelper().format(_cmd.getPlayer(), "&4You do not have permission to use this command"));
 					return;
 				}
 			}
-			for(String msg : MyTokens.PublicHelpCommands){
-				sendMessage(MessageHelper.Format(null, msg));
+			for(String msg : MyTokens.HELP_COMMANDS_PUBLIC){
+				sendMessage(MyTokens.getAPI().getMessageHelper().format(null, msg));
 			}
 		}
 		if(_cmd.getArg(0).equalsIgnoreCase("breakable")){
 			if(!_cmd.getPlayer().hasPermission(_Permission + ".breakable")){
 				if(!_cmd.getPlayer().isOp()){
-					sendMessage(MessageHelper.Format(_cmd.getPlayer(), "&4You do not have permission to use this command"));
+					sendMessage(MyTokens.getAPI().getMessageHelper().format(_cmd.getPlayer(), "&4You do not have permission to use this command"));
 					return;
 				}
 			}
-			Inventory invy = new Inventory(_cmd.getPlayer(), MyTokens.BreakAbleItems, false, "Breakable Blocks", false);
+			Inventory invy = new Inventory(_cmd.getPlayer(), MyTokens.getAPI().getBreakableItems(), false, "Breakable Blocks", false);
 			if(!_cmd.getPlayer().hasPermission("mytokens.admin.enableblocks"))
 				if(!_cmd.getPlayer().isOp())
 					invy.getInventory().setItem(53, null);
@@ -67,27 +67,27 @@ public class MYT extends BaseCommand{
 		if(_cmd.getArg(0).equalsIgnoreCase("bal")){
 			if(!_cmd.getPlayer().hasPermission(_Permission + ".bal")){
 				if(!_cmd.getPlayer().isOp()){
-					sendMessage(MessageHelper.Format(_cmd.getPlayer(), "&4You do not have permission to use this command"));
+					sendMessage(MyTokens.getAPI().getMessageHelper().format(_cmd.getPlayer(), "&4You do not have permission to use this command"));
 					return;
 				}
 			}
-			sendMessage(MessageHelper.Format(_cmd.getPlayer(), "Your current Token Balance is &a%total"));
+			sendMessage(MyTokens.getAPI().getMessageHelper().format(_cmd.getPlayer(), "Your current Token Balance is &a%total"));
 			return;
 		}
 		if(_cmd.getArg(0).equalsIgnoreCase("give")){
 			if(!_cmd.getPlayer().hasPermission(_Permission + ".give")){
 				if(!_cmd.getPlayer().isOp()){
-					sendMessage(MessageHelper.Format(_cmd.getPlayer(), "&4You do not have permission to use this command"));
+					sendMessage(MyTokens.getAPI().getMessageHelper().format(_cmd.getPlayer(), "&4You do not have permission to use this command"));
 					return;
 				}
 			}
 			if(_cmd.getArgs().length >= 3){
 				Player Getter = Bukkit.getPlayer(_cmd.getArg(1));
 				if(Getter == null){
-					sendMessage(MessageHelper.Format(null, "&4User is offline"));
+					sendMessage(MyTokens.getAPI().getMessageHelper().format(null, "&4User is offline"));
 					return;
 				}else{
-					SQLhandler sql = MyTokens.sql;
+					SQLhandler sql = MyTokens.getAPI().getSqlHandler();
 					int GivingTokens = sql.GetBalance(Getter);//MyTokens.UserTokens.getConfig().getInt(Getter.getUniqueId().toString());
 					int TakingTokens = sql.GetBalance(_cmd.getPlayer());//MyTokens.UserTokens.getConfig().getInt(_cmd.getPlayer().getUniqueId().toString());
 					
@@ -100,11 +100,11 @@ public class MYT extends BaseCommand{
 					}
 					
 					if(Giving <= 0){
-						sendMessage(MessageHelper.Format(null, "&4You must send more then 0 tokens!"));
+						sendMessage(MyTokens.getAPI().getMessageHelper().format(null, "&4You must send more then 0 tokens!"));
 						return;
 					}
 					if(TakingTokens < Giving){
-						sendMessage(MessageHelper.Format(null, "&4You do not have enough tokens"));
+						sendMessage(MyTokens.getAPI().getMessageHelper().format(null, "&4You do not have enough tokens"));
 						return;
 					}
 					
@@ -116,11 +116,11 @@ public class MYT extends BaseCommand{
 					 //MyTokens.UserTokens.getConfig().set(Getter.getUniqueId().toString(), GivingTokens);
 					 //MyTokens.UserTokens.getConfig().set(_cmd.getPlayer().getUniqueId().toString(), TakingTokens);
 					 
-					 Getter.sendMessage(MessageHelper.Format(null, "You got " + Giving + " tokens from " + _cmd.getPlayer().getName()));
-					 sendMessage(MessageHelper.Format(null, "You sent " + Giving + " tokens to " + Getter.getName()));
+					 Getter.sendMessage(MyTokens.getAPI().getMessageHelper().format(null, "You got " + Giving + " tokens from " + _cmd.getPlayer().getName()));
+					 sendMessage(MyTokens.getAPI().getMessageHelper().format(null, "You sent " + Giving + " tokens to " + Getter.getName()));
 				}
 			}else{
-				sendMessage(MessageHelper.Format(null, "&4" + _invaidUsage + " &f /myt give username amount"));
+				sendMessage(MyTokens.getAPI().getMessageHelper().format(null, "&4" + _invaidUsage + " &f /myt give username amount"));
 				return;
 			}
 		}

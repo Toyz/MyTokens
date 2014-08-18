@@ -10,19 +10,18 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
 import com.toyz.MyTokens.MyTokens;
-import com.toyz.MyTokens.Utils.MessageHelper;
 import com.toyz.MyTokens.sql.SQLhandler;
 
 public class PlayerUse implements Listener {
 	 @EventHandler
 	 public void onPlayerUse(PlayerInteractEvent e){
-		 ConfigurationSection dropitem = MyTokens._plugin.getConfig().getConfigurationSection("dropitem");
+		 ConfigurationSection dropitem = MyTokens.getAPI().getConfig().getConfigurationSection("dropitem");
 		 if(e.getAction().equals(Action.RIGHT_CLICK_AIR) || e.getAction().equals(Action.RIGHT_CLICK_BLOCK)){
 			 int id = 0;
 			 try{
 				 id = Integer.valueOf(dropitem.getString("item.id")).intValue();
 			 }catch (Exception ex){
-				 MyTokens.logger.warning("Failed to create item with ID of " + id);
+				 MyTokens.getAPI().getLogger().warning("Failed to create item with ID of " + id);
 				 return;
 		     }
 			 
@@ -36,17 +35,17 @@ public class PlayerUse implements Listener {
 					 try{
 						 got = Integer.valueOf(amount.trim()).intValue();
 					 }catch (Exception ex){
-						 MyTokens.logger.warning("Failed to load token amount");
+						 MyTokens.getAPI().getLogger().warning("Failed to load token amount");
 						 return;
 				     }
 					 
-					 SQLhandler sql = MyTokens.sql;
+					 SQLhandler sql = MyTokens.getAPI().getSqlHandler();
 					 int tokens = sql.GetBalance(e.getPlayer());
 					 tokens = tokens + got;
 					 
 					 sql.SetBalance(e.getPlayer(), tokens);
 					 
-					 e.getPlayer().sendMessage(MessageHelper.Format(e.getPlayer(), dropitem.getString("used"), amount));
+					 e.getPlayer().sendMessage(MyTokens.getAPI().getMessageHelper().format(e.getPlayer(), dropitem.getString("used"), amount));
 					 int index = e.getPlayer().getInventory().getHeldItemSlot();
 					 ItemStack i = e.getPlayer().getInventory().getItemInHand();
 					 int count = i.getAmount();
