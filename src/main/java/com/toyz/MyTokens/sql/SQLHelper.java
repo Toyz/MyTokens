@@ -56,8 +56,10 @@ public class SQLHelper {
 						conn = DriverManager.getConnection(
 								"jdbc:sqlite:" + _plugin.getDataFolder() + File.separatorChar + 
 								((cs.getString("sqlite.file") != null) ? cs.getString("sqlite.file") : "mytokens.db"));
-					} catch (ClassNotFoundException | SQLException e) {
+					} catch (ClassNotFoundException e) {
 						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch(SQLException e){
 						e.printStackTrace();
 					}
 					
@@ -72,10 +74,12 @@ public class SQLHelper {
 								+ "/" + ((cs.getString("mysql.database") != null) ? cs.getString("mysql.database") : "mytokens"),
 								((cs.getString("mysql.user") != null) ? cs.getString("mysql.user") : "root"),
 								((cs.getString("mysql.password") != null) ? cs.getString("mysql.password") : ""));
-					} catch (ClassNotFoundException | SQLException e) {
+					} catch (ClassNotFoundException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
-				}
+					} catch(SQLException e){
+						e.printStackTrace();
+					}
 				
 			}
 		}	
