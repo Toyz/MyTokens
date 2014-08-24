@@ -19,6 +19,7 @@ public class PlayerJoin implements Listener {
                 MyTokens.getAPI().setBalance(e.getPlayer(), balance);
                 file.getConfig().set(e.getPlayer().getUniqueId().toString(), null);
                 MyTokens.getAPI().getLogger().info("Imported: " + e.getPlayer().getName());
+                file.saveConfig();
             }
         }
     }
