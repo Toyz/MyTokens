@@ -4,6 +4,8 @@
 bin
 *.jardesc
 *.class
+.idea/
+*.iml
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
@@ -55,3 +57,4 @@ $RECYCLE.BIN/
 *.msm
 *.msp
 /target
+*.iml

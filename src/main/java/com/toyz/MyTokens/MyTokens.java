@@ -81,7 +81,8 @@ public class MyTokens extends JavaPlugin {
 		pm.registerEvents(new BlockBreak(), this);
 		pm.registerEvents(new PlayerUse(), this);
 		pm.registerEvents(new EntityDeath(), this);
-		
+		pm.registerEvents(new PlayerJoin(), this);
+
 		sqlHandler = new SQLhandler(this);
 		sqlHandler.GetSQL().getConn();
 	}

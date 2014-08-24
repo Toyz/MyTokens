@@ -163,6 +163,11 @@ public class API {
 	public void reload() {
 		plugin.reload();
 	}
+
+    /**
+     * Gets the plugin
+     */
+    public MyTokens getMyTokens(){ return plugin; }
 	
 	/**
 	 * Gets the MathHelper class
