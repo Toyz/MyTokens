@@ -13,7 +13,7 @@ public class PlayerJoin implements Listener {
     public void onPlayerJoin(PlayerJoinEvent e) {
         File tokensFile = new File(MyTokens.getAPI().getMyTokens().getDataFolder(), "Tokens.yml");
         if (tokensFile.exists()) {
-           ConfigAccessor file = new ConfigAccessor(MyTokens.getAPI().getMyTokens(), tokensFile.getAbsolutePath());
+           ConfigAccessor file = new ConfigAccessor(MyTokens.getAPI().getMyTokens(), "Tokens.yml");
            int balance = file.getConfig().getInt(e.getPlayer().getUniqueId().toString());
             if(balance > 0){
                 MyTokens.getAPI().setBalance(e.getPlayer(), balance);
