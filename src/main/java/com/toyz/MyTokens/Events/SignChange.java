@@ -18,9 +18,8 @@ public class SignChange implements Listener {
             int max = e.getLines().length;
             if(max >= 4){
                  if(e.getLine(0).equalsIgnoreCase("[MyTokens]") || e.getLine(0).equalsIgnoreCase("[MYT]")){
-                     String last = e.getLine(3);
-                     String[] values = last.split(":");
-
+                     String last = e.getLine(3).replace(" ", "");
+                     e.setLine(3, last);
                      e.getPlayer().sendMessage(MyTokens.getAPI().getMessageHelper().format(e.getPlayer(), "Placed Tokens shop at"));
                  }
             }

@@ -27,7 +27,7 @@ public class PlayerUse implements Listener {
                          if (e.getPlayer().hasPermission("mytokens.sign.use")) {
                              e.setCancelled(true);
                              String[] last = s.getLine(3).split(":");
-                             int id = Integer.parseInt(last[1]);
+                             int id = Integer.parseInt(last[1].replace(" ", ""));
 
                              SQLhandler sql = MyTokens.getAPI().getSqlHandler();
                              ConfigurationSection cs = MyTokens.getAPI().getTokenShop().getConfig().getConfigurationSection("Shop." + id);
@@ -52,6 +52,9 @@ public class PlayerUse implements Listener {
 
                                  String message = MyTokens.getAPI().getConfig().getString("settings.command-messages.thank-you");
                                  e.getPlayer().sendMessage(MyTokens.getAPI().getMessageHelper().format(e.getPlayer(), message, cs.getInt("cost") + ""));
+                             }else{
+                                 String message = MyTokens.getAPI().getConfig().getString("settings.command-messages.cant-afford");
+                                 e.getPlayer().sendMessage(MyTokens.getAPI().getMessageHelper().format((Player) e.getPlayer(), message, cs.getInt("cost") + ""));
                              }
                          }
                      }
