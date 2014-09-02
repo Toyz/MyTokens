@@ -13,16 +13,15 @@ public class MathHelper {
 		return random.nextDouble() <= MyTokens.getAPI().getDropConfig().getConfig().getDouble("Drop.kills.percent");
 	}
 
-	public int randInt(int min, int max) {
-		return random.nextInt((max - min) + 1) + min;
-	}
+    public int randInt(int min, int max) {
+        return random.nextInt((max - min) + 1) + min;
+    }
 
 	public int currentTimeMillis() {
 		return (int) (System.currentTimeMillis() % Integer.MAX_VALUE);
 	}
 
-	public int amountDroppedFromForture(int fortuneLevel, Material material,
-			int returnValue) {
+	public int amountDroppedFromForture(int fortuneLevel, Material material, int returnValue) {
 		if (fortuneLevel < 3) {
 			switch (material) {
 			case REDSTONE:

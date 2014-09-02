@@ -108,7 +108,8 @@ public class MyTokensAdmin extends BaseCommand {
 						//System.out.println(givee.getUniqueId().toString() + " = " + givee.getName() + " - Giving: " + Giving + " - Total: " + Current + "");
 						//MyTokens.UserTokens.getConfig().set(givee.getUniqueId().toString(), Current);
 						sql.SetBalance(givee, Current);
-						givee.sendMessage(MyTokens.getAPI().getMessageHelper().format(null, "You were given %amount tokens!", Giving + ""));
+                        String message = MyTokens.getAPI().getConfig().getString("command-messages.console-give");
+						givee.sendMessage(MyTokens.getAPI().getMessageHelper().format(null, message, Giving + ""));
 					}else{
 						sendMessage(MyTokens.getAPI().getMessageHelper().format(null, "&4Player is currently offline"));
 					}
@@ -151,7 +152,8 @@ public class MyTokensAdmin extends BaseCommand {
 						//System.out.println(givee.getUniqueId().toString() + " = " + givee.getName() + " - Giving: " + Giving + " - Total: " + Current + "");
 						//MyTokens.UserTokens.getConfig().set(givee.getUniqueId().toString(), Current);
 						sql.SetBalance(givee, Current);
-						givee.sendMessage(MyTokens.getAPI().getMessageHelper().format(null, "You had %amount tokens taken from you!", Giving + ""));
+                        String message = MyTokens.getAPI().getConfig().getString("command-messages.console-take");
+						givee.sendMessage(MyTokens.getAPI().getMessageHelper().format(null, message, Giving + ""));
 					}else{
 						sendMessage(MyTokens.getAPI().getMessageHelper().format(null, "&4Player is currently offline"));
 					}

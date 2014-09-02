@@ -25,7 +25,13 @@ settings:
     killthrottle: 3
     #Cooldown till you can kill that person again in seconds
     timeout: 30
-  
+  #Change certain command messages
+  command-messages:
+    console-give: "You got %amount Tokens!"
+    console-take: "You had %amount Tokens taken from you!"
+    cant-afford: "You do not have enough for this item!"
+    thank-you: "You bought a item for %amount Tokens"
+
 #Modes to drop Tokens
 modes:
   #Player Vs Monster

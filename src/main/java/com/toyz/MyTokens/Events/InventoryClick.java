@@ -88,21 +88,24 @@ public class InventoryClick  implements Listener {
 				 ConfigurationSection cs = MyTokens.getAPI().getTokenShop().getConfig().getConfigurationSection("Shop." + index);
 				 
 				 int Tokens = sql.GetBalance((Player)e.getWhoClicked());
-				 if(Tokens >= cs.getInt("cost") || ((Player)e.getWhoClicked()).hasPermission("mytokens.admin.nopay") ||((Player)e.getWhoClicked()).isOp()){
+				 if(Tokens >= cs.getInt("cost") || (e.getWhoClicked()).hasPermission("mytokens.admin.nopay") ||(e.getWhoClicked()).isOp()){
 					 for (String cmd : cs.getStringList("commands")){
-						 if (cmd.indexOf('/') == 0) {
-							 cmd = cmd.substring(1);
-						 }
-						 
-						 cmd = cmd.replace("%player", e.getWhoClicked().getName());
-						 Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), ChatColor.translateAlternateColorCodes('&', cmd));
-					 }
-					 if(!((Player)e.getWhoClicked()).hasPermission("mytokens.admin.nopay")){
-						 if(!((Player)e.getWhoClicked()).isOp()){
+                         if (cmd.indexOf('/') == 0) {
+                             cmd = cmd.substring(1);
+                         }
+
+                         cmd = cmd.replace("%player", e.getWhoClicked().getName());
+                         Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), ChatColor.translateAlternateColorCodes('&', cmd));
+                     }
+					 if(!(e.getWhoClicked()).hasPermission("mytokens.admin.nopay")){
+						 if(!(e.getWhoClicked()).isOp()){
 							 Tokens = Tokens - cs.getInt("cost");
 							 sql.SetBalance((Player)e.getWhoClicked(), Tokens);
 						 }
 					 }
+
+                     String message = MyTokens.getAPI().getConfig().getString("command-messages.thank-you");
+                     ((Player) e.getWhoClicked()).sendMessage(MyTokens.getAPI().getMessageHelper().format((Player) e.getWhoClicked(), message, cs.getInt("cost") + ""));
 					 //MyTokens.UserTokens.getConfig().set(e.getWhoClicked().getUniqueId().toString(), Tokens);
 					 
 					 //Update Last Object
@@ -120,7 +123,8 @@ public class InventoryClick  implements Listener {
 						NMSUtils.addGlow(i); 
 					 ((Player)e.getWhoClicked()).updateInventory();
 				 }else{
-					 ((Player)e.getWhoClicked()).sendMessage("You cannot afford this item!");
+                     String message = MyTokens.getAPI().getConfig().getString("command-messages.cant-afford");
+                     ((Player) e.getWhoClicked()).sendMessage(MyTokens.getAPI().getMessageHelper().format((Player) e.getWhoClicked(), message, cs.getInt("cost") + ""));
 				 }
 			 }
 			 //System.out.println(e.getRawSlot());
