@@ -10,6 +10,14 @@ commands:
     description: Show all user based commands for MyTokens
     
 permissions:
+  #Sign Stuff
+  mytokens.sign.place:
+    description: Place a Token shop sign
+    default: op
+  mytokens.sign.use:
+    description: Use a Token shop sign
+    default: op
+
   #admin commands permissions
   mytokens.admin.reload:
     description: Reload the plugin
@@ -32,6 +40,7 @@ permissions:
   mytokens.admin.userbal:
     description: Allows you to view another users balance
     default: op
+
   #public commands permissions
   mytokens.myt.open:
     description: Allows player to open the shop

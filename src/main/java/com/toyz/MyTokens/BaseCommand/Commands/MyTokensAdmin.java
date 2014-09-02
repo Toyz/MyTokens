@@ -108,8 +108,14 @@ public class MyTokensAdmin extends BaseCommand {
 						//System.out.println(givee.getUniqueId().toString() + " = " + givee.getName() + " - Giving: " + Giving + " - Total: " + Current + "");
 						//MyTokens.UserTokens.getConfig().set(givee.getUniqueId().toString(), Current);
 						sql.SetBalance(givee, Current);
-                        String message = MyTokens.getAPI().getConfig().getString("command-messages.console-give");
+                        String message = MyTokens.getAPI().getConfig().getString("settings.command-messages.console-give");
 						givee.sendMessage(MyTokens.getAPI().getMessageHelper().format(null, message, Giving + ""));
+                        String title = ChatColor.translateAlternateColorCodes('&', MyTokens.getAPI().getConfig().getString("title"));
+
+                        if ((givee.getOpenInventory().getTitle() != null) && (givee.getOpenInventory().getTitle().equalsIgnoreCase(title)))
+                        {
+                            givee.closeInventory();
+                        }
 					}else{
 						sendMessage(MyTokens.getAPI().getMessageHelper().format(null, "&4Player is currently offline"));
 					}
@@ -152,8 +158,14 @@ public class MyTokensAdmin extends BaseCommand {
 						//System.out.println(givee.getUniqueId().toString() + " = " + givee.getName() + " - Giving: " + Giving + " - Total: " + Current + "");
 						//MyTokens.UserTokens.getConfig().set(givee.getUniqueId().toString(), Current);
 						sql.SetBalance(givee, Current);
-                        String message = MyTokens.getAPI().getConfig().getString("command-messages.console-take");
+                        String message = MyTokens.getAPI().getConfig().getString("settings.command-messages.console-take");
 						givee.sendMessage(MyTokens.getAPI().getMessageHelper().format(null, message, Giving + ""));
+                        String title = ChatColor.translateAlternateColorCodes('&', MyTokens.getAPI().getConfig().getString("title"));
+
+                        if ((givee.getOpenInventory().getTitle() != null) && (givee.getOpenInventory().getTitle().equalsIgnoreCase(title)))
+                        {
+                            givee.closeInventory();
+                        }
 					}else{
 						sendMessage(MyTokens.getAPI().getMessageHelper().format(null, "&4Player is currently offline"));
 					}
@@ -177,7 +189,13 @@ public class MyTokensAdmin extends BaseCommand {
 					//MyTokens.UserTokens.getConfig().set(givee.getUniqueId().toString(), 0); 
 					sql.SetBalance(givee, 0);
 					givee.sendMessage(MyTokens.getAPI().getMessageHelper().format(null, "Your Tokens have been reset to 0"));
-				}
+                    String title = ChatColor.translateAlternateColorCodes('&', MyTokens.getAPI().getConfig().getString("title"));
+
+                    if ((givee.getInventory().getTitle() != null) && (givee.getInventory().getTitle().equalsIgnoreCase(title)))
+                    {
+                       givee.closeInventory();
+                    }
+                }
 		}
 	}
 }

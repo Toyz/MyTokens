@@ -80,7 +80,6 @@ public class NMSUtils {
         String[] packages = className.split("\\.");
         if (packages.length == 5) {
             versionPrefix = packages[3] + ".";
-            System.out.println(versionPrefix);
         }
         try {
             class_EntityLiving = fixBukkitClass("net.minecraft.server.EntityLiving");

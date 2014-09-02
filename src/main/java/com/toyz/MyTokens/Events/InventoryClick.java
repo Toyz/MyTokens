@@ -104,11 +104,9 @@ public class InventoryClick  implements Listener {
 						 }
 					 }
 
-                     String message = MyTokens.getAPI().getConfig().getString("command-messages.thank-you");
+                     String message = MyTokens.getAPI().getConfig().getString("settings.command-messages.thank-you");
                      ((Player) e.getWhoClicked()).sendMessage(MyTokens.getAPI().getMessageHelper().format((Player) e.getWhoClicked(), message, cs.getInt("cost") + ""));
-					 //MyTokens.UserTokens.getConfig().set(e.getWhoClicked().getUniqueId().toString(), Tokens);
-					 
-					 //Update Last Object
+
 					 ItemStack i = e.getInventory().getItem(_rowLength - 1);
 					 ConfigurationSection cs1 = MyTokens.getAPI().getConfig().getConfigurationSection("infoitem");
 					 ItemMeta l = i.getItemMeta();
@@ -123,7 +121,7 @@ public class InventoryClick  implements Listener {
 						NMSUtils.addGlow(i); 
 					 ((Player)e.getWhoClicked()).updateInventory();
 				 }else{
-                     String message = MyTokens.getAPI().getConfig().getString("command-messages.cant-afford");
+                     String message = MyTokens.getAPI().getConfig().getString("settings.command-messages.cant-afford");
                      ((Player) e.getWhoClicked()).sendMessage(MyTokens.getAPI().getMessageHelper().format((Player) e.getWhoClicked(), message, cs.getInt("cost") + ""));
 				 }
 			 }
