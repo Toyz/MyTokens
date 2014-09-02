@@ -15,8 +15,8 @@ import com.toyz.MyTokens.Tools.Item;
 import com.toyz.MyTokens.sql.SQLhandler;
 
 public class EntityDeath implements Listener {
-	@EventHandler
-	public void onEntityDeath(EntityDeathEvent event) {
+	@EventHandler(priority = EventPriority.HIGH)
+	public void on(EntityDeathEvent event) {
 		Entity killedE = event.getEntity();
 		if(!(killedE instanceof Player)){
 			if(killedE.getLastDamageCause() instanceof EntityDamageByEntityEvent){ //the dead thing was killed by an entity

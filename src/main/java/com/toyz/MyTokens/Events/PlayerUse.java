@@ -6,6 +6,7 @@ import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -16,8 +17,8 @@ import com.toyz.MyTokens.MyTokens;
 import com.toyz.MyTokens.sql.SQLhandler;
 
 public class PlayerUse implements Listener {
-	 @EventHandler
-	 public void on(PlayerInteractEvent e){
+    @EventHandler(priority = EventPriority.HIGH)
+    public void on(PlayerInteractEvent e){
          if(e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
              if (e.getClickedBlock().getType() == Material.WALL_SIGN || e.getClickedBlock().getType() == Material.SIGN_POST) {
                  Sign s = (Sign) e.getClickedBlock().getState();

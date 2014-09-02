@@ -3,14 +3,15 @@ package com.toyz.MyTokens.Events;
 import com.toyz.MyTokens.MyTokens;
 import com.toyz.MyTokens.Utils.ConfigAccessor;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 import java.io.File;
 
 public class PlayerJoin implements Listener {
-    @EventHandler
-    public void onPlayerJoin(PlayerJoinEvent e) {
+    @EventHandler(priority = EventPriority.HIGH)
+    public void on(PlayerJoinEvent e) {
         File tokensFile = new File(MyTokens.getAPI().getMyTokens().getDataFolder(), "Tokens.yml");
         if (tokensFile.exists()) {
            ConfigAccessor file = new ConfigAccessor(MyTokens.getAPI().getMyTokens(), "Tokens.yml");

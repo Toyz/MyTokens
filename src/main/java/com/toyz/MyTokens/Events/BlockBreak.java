@@ -8,6 +8,7 @@ import org.bukkit.GameMode;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
@@ -18,8 +19,8 @@ import com.toyz.MyTokens.Tools.TokenBlock;
 import com.toyz.MyTokens.sql.SQLhandler;
 
 public class BlockBreak implements Listener {
-	@EventHandler
-	public void onBlockBreak(BlockBreakEvent e){
+	@EventHandler(priority = EventPriority.HIGH)
+	public void on(BlockBreakEvent e){
 		Player _player = e.getPlayer();
 
 		if(!MyTokens.getAPI().getConfig().getBoolean("modes.blockbreak")){

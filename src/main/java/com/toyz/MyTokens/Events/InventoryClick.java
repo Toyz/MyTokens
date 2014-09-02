@@ -20,8 +20,8 @@ import com.toyz.MyTokens.sql.SQLhandler;
 
 public class InventoryClick  implements Listener {
 	@SuppressWarnings("deprecation")
-	@EventHandler
-	 public void onInventoryClick(InventoryClickEvent e){
+	@EventHandler(priority = EventPriority.HIGH)
+	 public void on(InventoryClickEvent e){
 		 String title = ChatColor.translateAlternateColorCodes('&', MyTokens.getAPI().getConfig().getString("title"));
 		 if((e.getInventory().getTitle() != null) && (e.getInventory().getTitle().equalsIgnoreCase("Breakable Blocks"))){
 			e.setCancelled(true);
