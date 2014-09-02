@@ -43,8 +43,7 @@ public class MyTokens extends JavaPlugin {
 	public void onEnable() {
 		console = Bukkit.getServer().getConsoleSender();
 		api = new API(this);
-		
-		 try {
+        try {
 		        MetricsLite metrics = new MetricsLite(this);
 		        metrics.start();
 		    } catch (IOException e) {
