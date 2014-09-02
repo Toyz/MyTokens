@@ -3,6 +3,7 @@ package com.toyz.MyTokens.Tools;
 import java.text.DecimalFormat;
 import java.util.*;
 
+import org.apache.commons.lang.WordUtils;
 import org.bukkit.*;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
@@ -53,7 +54,7 @@ public class BuildTokenBlocks {
 					ChatColor.WHITE + "Drops Enabled: " + ChatColor.GOLD + (block.enabled() ? "Yes" : "No")
 			);
 			int BlockID = block.enabled() ? block.getType().getId() : 152;
-			items.put(id, Item.CreateItem(BlockID + "", block.getType().name().replace("_", " ").toLowerCase(), lore, 1, false));
+			items.put(id, Item.CreateItem(BlockID + "", WordUtils.capitalize(block.getType().name().replace("_", " ").toLowerCase()), lore, 1, false));
 			id++;
 		}
 		return items;
