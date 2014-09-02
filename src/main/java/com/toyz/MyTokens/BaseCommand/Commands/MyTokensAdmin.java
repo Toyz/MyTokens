@@ -104,9 +104,7 @@ public class MyTokensAdmin extends BaseCommand {
 						
 						int Current = sql.GetBalance(givee);
 						Current = Giving + Current;
-						
-						//System.out.println(givee.getUniqueId().toString() + " = " + givee.getName() + " - Giving: " + Giving + " - Total: " + Current + "");
-						//MyTokens.UserTokens.getConfig().set(givee.getUniqueId().toString(), Current);
+
 						sql.SetBalance(givee, Current);
                         String message = MyTokens.getAPI().getConfig().getString("settings.command-messages.console-give");
 						givee.sendMessage(MyTokens.getAPI().getMessageHelper().format(null, message, Giving + ""));
