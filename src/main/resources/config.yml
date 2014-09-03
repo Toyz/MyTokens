@@ -18,7 +18,13 @@ database:
 settings:
   shop:
     #max is 6 if you use 1 only first 7 items will show
-    rows: 1 
+    rows: 1
+
+  #sign shop
+  sign-shop:
+    #First line of the sign
+    title: "[MyTokens]"
+
   #WIP but is working
   pvp:
     enablethrottle: false

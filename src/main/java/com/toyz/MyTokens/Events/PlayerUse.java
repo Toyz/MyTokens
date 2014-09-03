@@ -24,7 +24,7 @@ public class PlayerUse implements Listener {
                  Sign s = (Sign) e.getClickedBlock().getState();
 
                  if (s.getLines().length >= 4) {
-                     if (s.getLine(0).equalsIgnoreCase("[MyTokens]") || s.getLine(0).equalsIgnoreCase("[MYT]")) {
+                     if (s.getLine(0).equalsIgnoreCase(MyTokens.getAPI().getConfig().getString("settings.sign-shop.title"))) {
                          if (e.getPlayer().hasPermission("mytokens.sign.use")) {
                              e.setCancelled(true);
                              String[] last = s.getLine(3).split(":");
