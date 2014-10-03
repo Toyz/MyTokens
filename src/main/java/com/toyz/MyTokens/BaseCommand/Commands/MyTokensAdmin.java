@@ -183,7 +183,11 @@ public class MyTokensAdmin extends BaseCommand {
 				if(_cmd.getArgs().length >= 2){
 					SQLhandler sql = MyTokens.getAPI().getSqlHandler();
 					Player givee = Bukkit.getPlayer(_cmd.getArg(1));
-					
+
+                    if(givee == null){
+                        sendMessage(MyTokens.getAPI().getMessageHelper().format(null, "&4Player is currently offline"));
+                    }
+
 					//MyTokens.UserTokens.getConfig().set(givee.getUniqueId().toString(), 0); 
 					sql.SetBalance(givee, 0);
 					givee.sendMessage(MyTokens.getAPI().getMessageHelper().format(null, "Your Tokens have been reset to 0"));

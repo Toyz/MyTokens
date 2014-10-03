@@ -6,10 +6,10 @@ description: A Token Plugin to give players a token style item within the server
 commands:
   mytokens:
     description: Show all commands for mytokens
-    aliases: [tokens]
+    aliases: [tokensadmin]
   myt:
     description: Show all user based commands for MyTokens
-    aliases: [tokensadmin]
+    aliases: [tokens]
     
 permissions:
   #Sign Stuff
