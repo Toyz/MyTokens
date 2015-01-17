@@ -44,17 +44,17 @@ public class BuildTokenBlocks {
 	public static Hashtable<Integer, ItemStack> BuildBreakAbleList(){
 		Hashtable<Integer, ItemStack> items = new Hashtable<Integer, ItemStack>();
 		int id = 0;
-		for(TokenBlock block : MyTokens.getAPI().getDropBlocks()){
+		for(TokenBlock tokenBlock : MyTokens.getAPI().getDropBlocks()){
 			DecimalFormat df = new DecimalFormat("#%");
 			
 			List<String> lore = Arrays.asList(
-					ChatColor.WHITE + "Max: " + ChatColor.GOLD + block.maxDrop() + "",
-					ChatColor.WHITE + "Min: " + ChatColor.GOLD + block.minDrop() + "",
-					ChatColor.WHITE + "Percent of Drop: " + ChatColor.GOLD + df.format(block.getChance()),
-					ChatColor.WHITE + "Drops Enabled: " + ChatColor.GOLD + (block.enabled() ? "Yes" : "No")
+					ChatColor.WHITE + "Max: " + ChatColor.GOLD + tokenBlock.maxDrop() + "",
+					ChatColor.WHITE + "Min: " + ChatColor.GOLD + tokenBlock.minDrop() + "",
+					ChatColor.WHITE + "Percent of Drop: " + ChatColor.GOLD + df.format(tokenBlock.getChance()),
+					ChatColor.WHITE + "Drops Enabled: " + ChatColor.GOLD + (tokenBlock.enabled() ? "Yes" : "No")
 			);
-			int BlockID = block.enabled() ? block.getType().getId() : 152;
-			items.put(id, Item.CreateItem(BlockID + "", WordUtils.capitalize(block.getType().name().replace("_", " ").toLowerCase()), lore, 1, false));
+			int BlockID = tokenBlock.enabled() ? tokenBlock.getType().getId() : 152;
+			items.put(id, Item.CreateItem(BlockID + "", WordUtils.capitalize(tokenBlock.getType().name().replace("_", " ").toLowerCase()), lore, 1, false));
 			id++;
 		}
 		return items;
