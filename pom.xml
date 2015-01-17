@@ -4,13 +4,11 @@
   <artifactId>MyTokens</artifactId>
   <version>1.8</version>
   <packaging>jar</packaging>
-  <url>https://github.com/Toyz/MyTokens</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <github.global.server>github</github.global.server>
   </properties>
-
+  
   <repositories>
     <repository>
       <id>bukkit-repo</id>
@@ -24,12 +22,6 @@
       <artifactId>bukkit</artifactId>
       <version>1.7.9-R0.2</version>
     </dependency>
-      <dependency>
-          <groupId>commons-dbcp</groupId>
-          <artifactId>commons-dbcp</artifactId>
-          <version>1.4</version>
-      </dependency>
-
   </dependencies>
 
   <build>
@@ -54,49 +46,5 @@
              </includes>
             </resource>
     </resources>
-      <plugins>
-          <plugin>
-              <groupId>org.apache.maven.plugins</groupId>
-              <artifactId>maven-shade-plugin</artifactId>
-              <version>2.3</version>
-              <executions>
-                  <execution>
-                      <phase>package</phase>
-                      <goals>
-                          <goal>shade</goal>
-                      </goals>
-                      <configuration>
-                          <artifactSet>
-                              <excludes>
-                                  <exclude>org.bukkit</exclude>
-                                  <exclude>junit:junit</exclude>
-                                  <exclude>jmock:*</exclude>
-                                  <exclude>*:xml-apis</exclude>
-                                  <exclude>org.apache.maven:lib:tests</exclude>
-                                  <exclude>log4j:log4j:jar:</exclude>
-                              </excludes>
-                          </artifactSet>
-                      </configuration>
-                  </execution>
-              </executions>
-          </plugin>
-          <plugin>
-              <groupId>com.github.github</groupId>
-              <artifactId>site-maven-plugin</artifactId>
-              <version>0.9</version>
-              <configuration>
-                  <message>Creating site for ${project.version}</message>
-              </configuration>
-              <executions>
-                  <execution>
-                      <goals>
-                          <goal>site</goal>
-                      </goals>
-                      <phase>site</phase>
-                  </execution>
-              </executions>
-          </plugin>
-      </plugins>
   </build>
-
 </project>

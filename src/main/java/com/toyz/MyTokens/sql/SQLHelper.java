@@ -9,20 +9,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import org.apache.commons.dbcp.ConnectionFactory;
-import org.apache.commons.dbcp.DriverManagerConnectionFactory;
-import org.apache.commons.dbcp.PoolableConnectionFactory;
-import org.apache.commons.dbcp.PoolingDataSource;
-import org.apache.commons.pool.impl.GenericObjectPool;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.ConfigurationSection;
 
 import com.toyz.MyTokens.MyTokens;
 
-import javax.sql.DataSource;
-
 public class SQLHelper {
-    private GenericObjectPool connectionPool = null;
 	private MyTokens _plugin;
 	private Connection conn;
 	private Statement stmt;  
@@ -31,11 +23,8 @@ public class SQLHelper {
 	    
 	public SQLHelper(MyTokens plugin){
 		_plugin = plugin;
-
-        connectionPool = new GenericObjectPool();
-        connectionPool.setMaxActive(10);
-
-        ConfigurationSection cs = _plugin.getConfig().getConfigurationSection("database");
+		
+		ConfigurationSection cs = _plugin.getConfig().getConfigurationSection("database");
 		
 		if(cs.getBoolean("sqlite.use") && cs.getBoolean("mysql.use")){
 			_plugin.getLogger().log(Level.SEVERE, ChatColor.translateAlternateColorCodes('&', _plugin.getConfig().getString("prefix")) + " Bpth MySQL and SQLite can not be enabled!");
@@ -76,9 +65,9 @@ public class SQLHelper {
 				}
 				
 				if(!cs.getBoolean("sqlite.use") && cs.getBoolean("mysql.use")){
-					/*try {
+					try {
 						Class.forName("com.mysql.jdbc.Driver");
-						conn = DriverManager.getConnection("jdbc:mysql://"
+						conn = DriverManager.getConnection("jdbc:mysql://" 
 								+ ((cs.getString("mysql.host") != null) ? cs.getString("mysql.host") : "localhost")
 								+ ":" + ((cs.getString("mysql.port") != null) ? cs.getString("mysql.port") : "3306")
 								+ "/" + ((cs.getString("mysql.database") != null) ? cs.getString("mysql.database") : "mytokens"),
@@ -88,36 +77,8 @@ public class SQLHelper {
 						e.printStackTrace();
 					} catch (SQLException e){
 						e.printStackTrace();
-					}*/
-                    try {
-                        Class.forName("com.mysql.jdbc.Driver").newInstance();
-                    } catch (InstantiationException e) {
-                        e.printStackTrace();
-                    } catch (IllegalAccessException e) {
-                        e.printStackTrace();
-                    } catch (ClassNotFoundException e) {
-                        e.printStackTrace();
-                    }
-                    ConnectionFactory cf = new DriverManagerConnectionFactory(
-                            "jdbc:mysql://"
-                                    + ((cs.getString("mysql.host") != null) ? cs.getString("mysql.host") : "localhost")
-                                    + ":" + ((cs.getString("mysql.port") != null) ? cs.getString("mysql.port") : "3306")
-                                    + "/" + ((cs.getString("mysql.database") != null) ? cs.getString("mysql.database") : "mytokens"),
-                            ((cs.getString("mysql.user") != null) ? cs.getString("mysql.user") : "root"),
-                            ((cs.getString("mysql.password") != null) ? cs.getString("mysql.password") : ""));
-
-                    PoolableConnectionFactory pcf =
-                            new PoolableConnectionFactory(cf, connectionPool,
-                                    null, null, false, true);
-
-                    PoolingDataSource p = new PoolingDataSource(connectionPool);
-
-                    try {
-                        conn = p.getConnection();
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-                }
+					}
+			}
 		}	
 		return conn;
 	}
@@ -146,11 +107,11 @@ public class SQLHelper {
   
     }  
   
-    public PreparedStatement preparedStatement(String sql) {// SQL
+    public PreparedStatement preparedStatement(String sql) {// SQL  
         pstmt = null;  
         try {  
             pstmt = getConn().prepareStatement(sql);  
-        } catch (SQLException e) {
+        } catch (SQLException e) {  
             e.printStackTrace();  
         }  
         return pstmt;  
