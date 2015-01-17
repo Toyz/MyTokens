@@ -40,6 +40,7 @@ public class MyTokens extends JavaPlugin {
 			"&b/myt bal &f- Shows your current token balance");
 	
 	//Enable Plugin
+	@Override
 	public void onEnable() {
 		console = Bukkit.getServer().getConsoleSender();
 		api = new API(this);
@@ -103,6 +104,7 @@ public class MyTokens extends JavaPlugin {
 	}
 	
 	//Disable Plugin
+	@Override
 	public void onDisable() {
 		//TokenShop.saveConfig();
 		

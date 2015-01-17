@@ -19,7 +19,7 @@ public class MessageHelper {
 		//Fix string
 		Enumeration<String> e = _replace.keys();
 	    while (e.hasMoreElements()) {
-	    	String key = (String) e.nextElement();
+	    	String key = e.nextElement();
 	        msg = msg.replace(key,_replace.get(key));
 	    }
 	    
@@ -47,7 +47,7 @@ public class MessageHelper {
 		//Fix string
 		Enumeration<String> e = _replace.keys();
 	    while (e.hasMoreElements()) {
-	    	String key = (String) e.nextElement();
+	    	String key = e.nextElement();
 	        msg = msg.replace(key,_replace.get(key));
 	    }
 	    
