@@ -44,13 +44,13 @@ public class MyTokens extends JavaPlugin {
 	public void onEnable() {
 		console = Bukkit.getServer().getConsoleSender();
 		api = new API(this);
-        try {
-		        MetricsLite metrics = new MetricsLite(this);
-		        metrics.start();
-		    } catch (IOException e) {
-		        // Failed to submit the stats :-(
-		    }
-		 
+		try {
+			MetricsLite metrics = new MetricsLite(this);
+			metrics.start();
+		} catch (IOException e) {
+			// Failed to submit the stats :-(
+		}
+
 		//Load some Configs!
 		tokenShop = new ConfigAccessor(this, "shop.yml");
 		dropConfig = new ConfigAccessor(this, "dropsettings.yml");
@@ -82,7 +82,7 @@ public class MyTokens extends JavaPlugin {
 		pm.registerEvents(new PlayerUse(), this);
 		pm.registerEvents(new EntityDeath(), this);
 		pm.registerEvents(new PlayerJoin(), this);
-        //pm.registerEvents(new SignChange(), this);
+		//pm.registerEvents(new SignChange(), this);
 
 		sqlHandler = new SQLhandler(this);
 		sqlHandler.GetSQL().getConn();
