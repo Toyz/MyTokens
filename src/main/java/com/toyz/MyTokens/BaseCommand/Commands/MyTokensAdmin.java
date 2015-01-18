@@ -186,6 +186,7 @@ public class MyTokensAdmin extends BaseCommand {
 
                     if(givee == null){
                         sendMessage(MyTokens.getAPI().getMessageHelper().format(null, "&4Player is currently offline"));
+                        return;
                     }
 
 					//MyTokens.UserTokens.getConfig().set(givee.getUniqueId().toString(), 0); 

@@ -34,14 +34,12 @@ public class Inventory {
 	}
 	
 	private void Build(Boolean ShowTokenBal){
-		int i = 0;
 		Iterator<Map.Entry<Integer, ItemStack>> it = _items.entrySet().iterator();
 		
 		while(it.hasNext()){
 			Map.Entry<Integer, ItemStack> entry = it.next();
 			if(entry.getKey() < _rowLength){
 				_Inventory.setItem(entry.getKey(), entry.getValue());
-				i++;
 			}
 			//MyTokens.console.sendMessage(MessageHelper.Format(null, "&Loaded item @ index " + entry.getKey()));
 		}

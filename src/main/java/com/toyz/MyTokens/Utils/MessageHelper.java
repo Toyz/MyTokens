@@ -18,25 +18,20 @@ public class MessageHelper {
 		
 		//Fix string
 		Enumeration<String> e = _replace.keys();
-	    while (e.hasMoreElements()) {
-	    	String key = (String) e.nextElement();
-	        msg = msg.replace(key,_replace.get(key));
-	    }
-	    
-	    //Add our color support
-	    msg = ChatColor.translateAlternateColorCodes('&', msg);
-	    
-	    //return our fixed string
+		while (e.hasMoreElements()) {
+			String key = e.nextElement();
+			msg = msg.replace(key, _replace.get(key));
+		}
+
+		// Add our color support
+		msg = ChatColor.translateAlternateColorCodes('&', msg);
+
+		// return our fixed string
 		return msg;
 	}
 	
-	private void buildReplaceTable(Player _player){
-		if(_player != null){
-			SQLhandler sql = MyTokens.getAPI().getSqlHandler();
-			_replace.put("%player", _player.getName());
-			_replace.put("%total", sql.GetBalance(_player) + "");
-		}
-		_replace.put("%amount", "0");
+	private void buildReplaceTable(Player _player) {
+		buildReplaceTable(_player, "0");
 	}
 	
 	public String format(Player player, String msg, String Dropped){
@@ -46,20 +41,20 @@ public class MessageHelper {
 		
 		//Fix string
 		Enumeration<String> e = _replace.keys();
-	    while (e.hasMoreElements()) {
-	    	String key = (String) e.nextElement();
-	        msg = msg.replace(key,_replace.get(key));
-	    }
-	    
-	    //Add our color support
-	    msg = ChatColor.translateAlternateColorCodes('&', msg);
-	    
-	    //return our fixed string
+		while (e.hasMoreElements()) {
+			String key = e.nextElement();
+			msg = msg.replace(key, _replace.get(key));
+		}
+
+		// Add our color support
+		msg = ChatColor.translateAlternateColorCodes('&', msg);
+
+		// return our fixed string
 		return msg;
 	}
 	
 	private void buildReplaceTable(Player _player, String dropped){
-		if(_player != null){
+		if(_player != null) {
 			SQLhandler sql = MyTokens.getAPI().getSqlHandler();
 			_replace.put("%player", _player.getName());
 			_replace.put("%total", sql.GetBalance(_player) + "");

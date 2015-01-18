@@ -11,6 +11,7 @@ import com.toyz.MyTokens.BaseCommand.Commands.*;
 
 public class BaseCommand implements CommandExecutor {
 	static IssueCommands Info;
+	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args){
 		Info = new IssueCommands(sender, cmd.getName(), args, cmd);
 		
